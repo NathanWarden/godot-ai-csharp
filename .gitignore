@@ -1,0 +1,14 @@
+Thumbs.db
+Builds
+.svn
+.~lock*
+Desktop.ini
+.DS_Store
+*.blend1
+*~
+*.orig
+*.orig.meta
+
+Godot_Project/.*
+Godot_Project/obj
+Godot_Project/logs
