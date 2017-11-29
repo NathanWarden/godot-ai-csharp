@@ -1,8 +1,11 @@
-[gd_scene load_steps=13 format=2]
+[gd_scene load_steps=16 format=2]
 
 [ext_resource path="res://Field.dae" type="PackedScene" id=1]
-[ext_resource path="res://Navigator.cs" type="Script" id=2]
-[ext_resource path="res://Oscillator.cs" type="Script" id=3]
+[ext_resource path="res://BehaviorTree/Core/BehaviorTree.cs" type="Script" id=2]
+[ext_resource path="res://BehaviorTree/Agents/NavAgent3D.cs" type="Script" id=3]
+[ext_resource path="res://BehaviorTree/Composites/Sequence.cs" type="Script" id=4]
+[ext_resource path="res://BehaviorTree/Composites/Parallel.cs" type="Script" id=5]
+[ext_resource path="res://Oscillator.cs" type="Script" id=6]
 
 [sub_resource type="CylinderMesh" id=1]
 
@@ -303,14 +306,20 @@ _sections_unfolded = [ "Transform" ]
 
 editor/display_folded = true
 
-[node name="Navigator" type="Spatial" parent="."]
+[node name="BehaviorTree" type="Spatial" parent="."]
+
+script = ExtResource( 2 )
+_sections_unfolded = [ "Transform" ]
+resetOnFailure = false
+
+[node name="Navigator" type="Spatial" parent="BehaviorTree"]
 
 editor/display_folded = true
-script = ExtResource( 2 )
+script = ExtResource( 3 )
 _sections_unfolded = [ "Transform", "Visibility" ]
 moveSpeed = 5.0
 
-[node name="MeshInstance" type="MeshInstance" parent="Navigator"]
+[node name="MeshInstance" type="MeshInstance" parent="BehaviorTree/Navigator"]
 
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0 )
 layers = 1
@@ -327,7 +336,7 @@ skeleton = NodePath("..")
 material/0 = SubResource( 2 )
 _sections_unfolded = [ "Geometry", "Transform", "material" ]
 
-[node name="MeshInstance2" type="MeshInstance" parent="Navigator"]
+[node name="MeshInstance2" type="MeshInstance" parent="BehaviorTree/Navigator"]
 
 transform = Transform( 0.1, 0, 0, 0, 0.1, 0, 0, 0, 1, 0, 2.02127, -1.61878 )
 layers = 1
@@ -344,11 +353,27 @@ skeleton = NodePath("..")
 material/0 = SubResource( 4 )
 _sections_unfolded = [ "Transform", "material" ]
 
+[node name="Sequence" type="Spatial" parent="BehaviorTree"]
+
+script = ExtResource( 4 )
+
+[node name="Parallel" type="Spatial" parent="BehaviorTree/Sequence"]
+
+script = ExtResource( 5 )
+successCondition = 1
+failureCondition = 2
+
+[node name="Parallel2" type="Spatial" parent="BehaviorTree/Sequence/Parallel"]
+
+script = ExtResource( 5 )
+successCondition = 1
+failureCondition = 2
+
 [node name="NavTarget1" type="Spatial" parent="."]
 
 editor/display_folded = true
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -93.1016 )
-script = ExtResource( 3 )
+script = ExtResource( 6 )
 _sections_unfolded = [ "Transform" ]
 
 [node name="MeshInstance" type="MeshInstance" parent="NavTarget1"]
@@ -371,7 +396,7 @@ _sections_unfolded = [ "material" ]
 
 editor/display_folded = true
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -4.22855 )
-script = ExtResource( 3 )
+script = ExtResource( 6 )
 
 [node name="MeshInstance2" type="MeshInstance" parent="NavTarget2"]
 

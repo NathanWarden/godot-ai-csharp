@@ -1,5 +1,16 @@
 ﻿<Properties>
-  <MonoDevelop.Ide.Workbench />
+  <MonoDevelop.Ide.Workbench ActiveDocument="BehaviorTree/Core/BehaviorTreeNode.cs">
+    <Files>
+      <File FileName="BehaviorTree/Core/BehaviorTree.cs" Line="44" Column="5" />
+      <File FileName="BehaviorTree/Leaves/Actions/BaseActionLeaf.cs" Line="3" Column="44" />
+      <File FileName="BehaviorTree/Leaves/BaseLeaf.cs" Line="4" Column="3" />
+      <File FileName="BehaviorTree/Composites/BaseComposite.cs" Line="19" Column="14" />
+      <File FileName="BehaviorTree/Decorators/BaseDecorator.cs" Line="3" Column="18" />
+      <File FileName="BehaviorTree/Composites/Sequence.cs" Line="3" Column="35" />
+      <File FileName="BehaviorTree/Composites/Parallel.cs" Line="5" Column="31" />
+      <File FileName="BehaviorTree/Core/BehaviorTreeNode.cs" Line="18" Column="1" />
+    </Files>
+  </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore />

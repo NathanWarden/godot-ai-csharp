@@ -4,11 +4,11 @@ using System.Reflection;
 // Change them to the values specific to your project.
 
 [assembly: AssemblyTitle("Godot3_AI")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyDescription("A Behavior Tree for use in Godot Engine")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
 [assembly: AssemblyProduct("")]
-[assembly: AssemblyCopyright("")]
+[assembly: AssemblyCopyright("Nathan Warden")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 

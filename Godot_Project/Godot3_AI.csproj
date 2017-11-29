@@ -49,9 +49,28 @@
     <Reference Include="System" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Navigator.cs" />
     <Compile Include="Oscillator.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="BehaviorTree\Agents\NavAgent3D.cs" />
+    <Compile Include="BehaviorTree\Composites\BaseComposite.cs" />
+    <Compile Include="BehaviorTree\Core\BehaviorTree.cs" />
+    <Compile Include="BehaviorTree\Core\Enumerations.cs" />
+    <Compile Include="BehaviorTree\Decorators\BaseDecorator.cs" />
+    <Compile Include="BehaviorTree\Leaves\BaseLeaf.cs" />
+    <Compile Include="BehaviorTree\Core\BehaviorTreeNode.cs" />
+    <Compile Include="BehaviorTree\Leaves\Actions\BaseActionLeaf.cs" />
+    <Compile Include="BehaviorTree\Agents\INavAgent.cs" />
+    <Compile Include="BehaviorTree\Composites\Sequence.cs" />
+    <Compile Include="BehaviorTree\Composites\Selector.cs" />
+    <Compile Include="BehaviorTree\Composites\Parallel.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="BehaviorTree\Composites\" />
+    <Folder Include="BehaviorTree\Decorators\" />
+    <Folder Include="BehaviorTree\Core\" />
+    <Folder Include="BehaviorTree\Leaves\" />
+    <Folder Include="BehaviorTree\Leaves\Actions\" />
+    <Folder Include="BehaviorTree\Leaves\Conditions\" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>
