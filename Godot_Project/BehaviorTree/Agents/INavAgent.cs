@@ -1,6 +1,11 @@
-﻿namespace BehaviorTree
+﻿using Godot;
+
+
+namespace BehaviorTree
 {
-	interface INavAgent
+	public interface INavAgent
 	{
+		void TargetUpdated(Node target);
+		Vector3 GetPosition();
 	}
 }

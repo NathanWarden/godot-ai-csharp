@@ -10,8 +10,7 @@ namespace BehaviorTree
 		float moveSpeed = 5;
 
 		Navigation navigation;
-		Spatial navTarget1;
-		Spatial navTarget2;
+		Spatial navTarget = null;
 		List<Vector3> path = new List<Vector3>();
 
 		float nextPathUpdate = -1;
@@ -21,8 +20,6 @@ namespace BehaviorTree
 		public override void _Ready()
 		{
 			navigation = GetParent().GetParent() as Navigation;
-			navTarget1 = navigation.GetNode("NavTarget1") as Spatial;
-			navTarget2 = navigation.GetNode("NavTarget2") as Spatial;
 		}
 
 
@@ -33,11 +30,23 @@ namespace BehaviorTree
 		}
 
 
+		public void TargetUpdated(Node target)
+		{
+			navTarget = target as Spatial;
+		}
+
+
+		public Vector3 GetPosition()
+		{
+			return Translation;
+		}
+
+
 		void UpdatePath()
 		{
-			if (time > nextPathUpdate)
+			if (time > nextPathUpdate && navTarget != null)
 			{
-				path = new List<Vector3>(navigation.GetSimplePath(Translation, navTarget1.Translation, false));
+				path = new List<Vector3>(navigation.GetSimplePath(Translation, navTarget.Translation, false));
 				nextPathUpdate = time + 0.1f;
 			}
 		}
@@ -64,12 +73,6 @@ namespace BehaviorTree
 
 				Translation += moveDirection * delta * moveSpeed;
 				UpdatePath();
-			}
-			else
-			{
-				Spatial temp = navTarget1;
-				navTarget1 = navTarget2;
-				navTarget2 = temp;
 			}
 		}
 	}

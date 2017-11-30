@@ -19,7 +19,7 @@ namespace BehaviorTree
 		}
 
 
-		protected override void ExecuteComposite()
+		protected override void ExecuteComposite(float delta)
 		{
 			int successes = 0;
 			int failures = 0;
@@ -48,7 +48,7 @@ namespace BehaviorTree
 
 				if (node_state == BehaviorStatus.Running)
 				{
-					nodes[i].ProcessLogic();
+					nodes[i].ProcessLogic(delta);
 				}
 				else
 				{

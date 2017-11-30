@@ -7,9 +7,9 @@
 		protected virtual BehaviorStatus GetContinueStatus() { return BehaviorStatus.Success; }
 		protected virtual BehaviorStatus GetEndStatus() { return BehaviorStatus.Failure; }
 
-		protected override void ExecuteComposite()
+		protected override void ExecuteComposite(float delta)
 		{
-			BehaviorStatus node_state = nodes[currentNode].ProcessLogic();
+			BehaviorStatus node_state = nodes[currentNode].ProcessLogic(delta);
 
 			if (node_state == GetEndStatus())
 			{

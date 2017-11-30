@@ -9,14 +9,14 @@ namespace BehaviorTree
 		public List<BehaviorTreeNode> nodes = new List<BehaviorTreeNode>();
 
 
-		protected abstract void ExecuteComposite();
+		protected abstract void ExecuteComposite(float delta);
 
 
-		protected sealed override void Execute()
+		protected sealed override void Execute(float delta)
 		{
 			if (nodes.Count > 0)
 			{
-				ExecuteComposite();
+				ExecuteComposite(delta);
 			}
 			else
 			{

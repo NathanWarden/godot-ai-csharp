@@ -6,16 +6,21 @@ namespace BehaviorTree
 	public abstract class BehaviorTreeNode : Node
 	{
 		public BehaviorStatus status = BehaviorStatus.Running;
+		protected BehaviorTree behaviorTree;
 
 
-		protected abstract void Execute();
-
-
-		protected internal virtual BehaviorStatus ProcessLogic()
+		public override void _Ready()
 		{
-			GD.Print(GetName());
+			ResetNode();
+		}
 
-			Execute();
+
+		protected abstract void Execute(float delta);
+
+
+		protected internal virtual BehaviorStatus ProcessLogic(float delta)
+		{
+			Execute(delta);
 
 			return GetStatus();
 		}
@@ -30,6 +35,12 @@ namespace BehaviorTree
 		public BehaviorStatus GetStatus()
 		{
 			return status;
+		}
+
+
+		internal void SetBehaviorTree(BehaviorTree pBehaviorTree)
+		{
+			behaviorTree = pBehaviorTree;
 		}
 
 

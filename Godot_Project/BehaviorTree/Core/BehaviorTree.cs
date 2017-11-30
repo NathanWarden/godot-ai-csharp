@@ -1,4 +1,6 @@
 using Godot;
+using System.Collections.Generic;
+
 
 namespace BehaviorTree
 {
@@ -6,6 +8,8 @@ namespace BehaviorTree
 	{
 		[Export]
 		public bool resetOnFailure;
+
+		public INavAgent navigator;
 
 		BehaviorTreeNode rootNode;
 
@@ -23,7 +27,7 @@ namespace BehaviorTree
 
 		public override void _Process(float delta)
 		{
-			if ( rootNode.ProcessLogic() != BehaviorStatus.Running && resetOnFailure )
+			if ( rootNode.ProcessLogic(delta) != BehaviorStatus.Running && resetOnFailure )
 			{
 				rootNode.ResetNode();
 			}
@@ -34,13 +38,18 @@ namespace BehaviorTree
 		{
 			if (rootNode == null)
 			{
-				rootNode = GetRootNode();
+				rootNode = GetRootNode<BehaviorTreeNode>();
+			}
+
+			if (navigator == null)
+			{
+				navigator = GetRootNode<INavAgent>();
 			}
 
 			if (rootNode != null)
 			{
 				rootNode.UpdateChildNodes();
-				//set_behavior_tree_on_children(root_node);
+				SetBehaviorTreeOnChildren(rootNode);
 			}
 			else
 			{
@@ -49,19 +58,33 @@ namespace BehaviorTree
 		}
 
 
-		BehaviorTreeNode GetRootNode()
+		T GetRootNode<T>()
 		{
 			object[] nodes = GetChildren();
 
 			for (int i = 0; i < nodes.Length; i++)
 			{
-				if ( nodes[i] is BehaviorTreeNode )
+				if ( nodes[i] is T )
 				{
-					return (BehaviorTreeNode)nodes[i];
+					return (T)nodes[i];
 				}
 			}
 
-			return null;
+			return default(T);
+		}
+
+
+		void SetBehaviorTreeOnChildren(BehaviorTreeNode node)
+		{
+			List<BehaviorTreeNode> nodes = node.GetChildNodesByType<BehaviorTreeNode>();
+
+			node.SetBehaviorTree(this);
+
+			for (int i = 0; i < nodes.Count; i++)
+			{
+				nodes[i].SetBehaviorTree(this);
+				SetBehaviorTreeOnChildren(nodes[i]);
+			}
 		}
 	}
 }
