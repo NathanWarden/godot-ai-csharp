@@ -6,33 +6,39 @@ namespace BehaviorTree
 {
 	public abstract class PatrolBase<T> : BehaviorTreeNode where T : Node
 	{
-		[Export]
-		public float waypoint_threshold = 2.0f;
+		[Export] public float waypointThreshold = 2.0f;
+		[Export] public LoopEndMode patrolEndMode = LoopEndMode.Loop;
+		[Export] public bool overrideBaseSpeed;
+		[Export] public float patrolSpeed;
+		[Export] public ContinuePatrolMode continuePatrolMode;
 
-		[Export]
-		public LoopEndMode patrol_end_mode;
+		int currentPatrolIndex;
+		int patrolDirection = 1;
 
-		[Export]
-		public bool overrideBaseSpeed;
-
-		[Export]
-		public float patrolSpeed;
-
-		int current_patrol_index;
-		int patrol_direction = 1;
-
-		List<T> patrol_targets = new List<T>();
-		Node current_target;
+		List<T> patrolTargets = new List<T>();
+		Node currentTarget;
 
 
 		public enum LoopEndMode
 		{
+			Once,
 			Loop,
-			Ping_Pong
+			PingPong,
+			Random
 		}
 
 
-		internal protected override void EnterNode()
+		public enum ContinuePatrolMode
+		{
+			Reset,
+			ContinuePrevious,
+			NearestNode,
+			NearestNextNode,
+			Random
+		}
+
+
+		internal protected override void ResetNode()
 		{
 			float speed;
 
@@ -46,36 +52,83 @@ namespace BehaviorTree
 			}
 
 			behaviorTree.navigator.SetMovementSpeed(speed);
+
+			HandleContinuePatrolMode();
+
+			if (currentTarget != null)
+			{
+				behaviorTree.navigator.TargetUpdated(currentTarget);
+			}
+
+			base.ResetNode();
+
+			GD.Print("----- " + status);
+		}
+
+
+		void HandleContinuePatrolMode()
+		{
+			switch (continuePatrolMode)
+			{
+				case ContinuePatrolMode.Reset:
+					patrolDirection = 1;
+					currentPatrolIndex = 0;
+					break;
+
+				/*case ContinuePatrolMode.NearestNode:
+				case ContinuePatrolMode.NearestNextNode:
+					Vector3 thisPos = behaviorTree.navigator.GetPosition();
+					int nearestNode = 0;
+					float nearestSqrMagnitude = Mathf.Infinity;
+
+					for (int i = 1; i < patrolPoints.Length; i++)
+					{
+						float thisSqrMagnitude = (thisPos - patrolPoints[i].position).sqrMagnitude;
+
+						if (CheckIfWithinThreshold(thisPos, patrolPoints[i].position, nearestSqrMagnitude))
+						{
+							nearestSqrMagnitude = thisSqrMagnitude;
+							nearestNode = i;
+						}
+					}
+
+					if (continuePatrolMode == ContinuePatrolMode.NearestNode)
+						currentPatrolIndex = nearestNode;
+					else if (patrolPoints.Length != 0)
+						currentPatrolIndex = (nearestNode + 1) % patrolPoints.Length;
+
+					break;
+
+				case ContinuePatrolMode.ContinuePrevious:
+					break;
+
+				case ContinuePatrolMode.Random:
+					currentPatrolIndex = Random.Range(0, patrolPoints.Length);
+					break;*/
+			}
 		}
 
 
 		protected override void Execute(float delta)
 		{
-			if (patrol_targets.Count > 0)
+			if (patrolTargets.Count > 0)
 			{
-				if (current_target == null)
+				if (currentTarget == null)
 				{
-					current_target = patrol_targets[0];
-					behaviorTree.navigator.TargetUpdated(current_target);
+					currentTarget = patrolTargets[0];
+					behaviorTree.navigator.TargetUpdated(currentTarget);
 					status = BehaviorStatus.Running;
 					return;
 				}
 				else
 				{
-					status = CheckPoints();
+					//status = CheckPoints();
 					return;
 				}
 			}
 
-			status = BehaviorStatus.Success;
-		}
-
-
-		internal protected override void ResetNode()
-		{
-			current_patrol_index = 0;
-			current_target = null;
-			base.ResetNode();
+			GD.Print("*** Success!");
+			//status = BehaviorStatus.Success;
 		}
 
 
@@ -98,17 +151,17 @@ namespace BehaviorTree
 
 				if (node is T)
 				{
-					_add_target(node as T);
+					AddTarget(node as T);
 				}
 			}
 		}
 
 
-		void _add_target(T target)
+		void AddTarget(T target)
 		{
-			if (!patrol_targets.Contains(target))
+			if (!patrolTargets.Contains(target))
 			{
-				patrol_targets.Add(target);
+				patrolTargets.Add(target);
 			}
 		}
 
@@ -117,44 +170,52 @@ namespace BehaviorTree
 		{
 			if (behaviorTree.navigator == null)
 			{
+				GD.Print("*** Failure!");
 				return BehaviorStatus.Failure;
 			}
 
-			if (patrol_targets.Count > 0)
+			if (patrolTargets.Count > 0)
 			{
-				float sqrDistance = GetSqrDistanceToNode(patrol_targets[current_patrol_index]);
-				float sqrDistanceThreshold = waypoint_threshold * waypoint_threshold;
+				float sqrDistance = GetSqrDistanceToNode(patrolTargets[currentPatrolIndex]);
+				float sqrDistanceThreshold = waypointThreshold * waypointThreshold;
 
 				if (sqrDistance <= sqrDistanceThreshold)
 				{
-					Node new_target;
-					bool patrol_ended = false;
+					Node newTarget;
+					bool patrolEnded = false;
 
-					current_patrol_index += patrol_direction;
+					currentPatrolIndex += patrolDirection;
 
-					if (patrol_direction == 1)
+					if (patrolDirection == 1)
 					{
-						patrol_ended = current_patrol_index >= patrol_targets.Count;
+						patrolEnded = currentPatrolIndex >= patrolTargets.Count;
 					}
-					else if (patrol_direction == -1)
+					else if (patrolDirection == -1)
 					{
-						patrol_ended = current_patrol_index < 0;
-					}
-
-					if (patrol_ended && patrol_end_mode == LoopEndMode.Ping_Pong)
-					{
-						current_patrol_index -= patrol_direction;
-						patrol_direction *= -1;
+						patrolEnded = currentPatrolIndex < 0;
 					}
 
-					current_patrol_index = current_patrol_index % patrol_targets.Count;
-
-					new_target = get_current_target();
-
-					if (current_target != new_target)
+					if (patrolEnded)
 					{
-						current_target = new_target;
-						behaviorTree.navigator.TargetUpdated(new_target);
+						if (patrolEndMode == LoopEndMode.Once)
+						{
+							return BehaviorStatus.Success;
+						}
+						else if (patrolEndMode == LoopEndMode.PingPong)
+						{
+							currentPatrolIndex -= patrolDirection;
+							patrolDirection *= -1;
+						}
+					}
+
+					currentPatrolIndex = currentPatrolIndex % patrolTargets.Count;
+
+					newTarget = GetCurrentTarget();
+
+					if (currentTarget != newTarget)
+					{
+						currentTarget = newTarget;
+						behaviorTree.navigator.TargetUpdated(newTarget);
 					}
 				}
 			}
@@ -163,9 +224,9 @@ namespace BehaviorTree
 		}
 
 
-		Node get_current_target()
+		Node GetCurrentTarget()
 		{
-			return patrol_targets[current_patrol_index];
+			return patrolTargets[currentPatrolIndex];
 		}
 	}
 }

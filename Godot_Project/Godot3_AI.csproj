@@ -68,6 +68,8 @@
     <Compile Include="BehaviorTree\Leaves\Actions\Patrol\Patrol2D.cs" />
     <Compile Include="BehaviorTree\Core\ExtensionMethods.cs" />
     <Compile Include="BehaviorTree\Leaves\Actions\Stop.cs" />
+    <Compile Include="BehaviorTree\Decorators\Loop.cs" />
+    <Compile Include="BehaviorTree\Decorators\Inverter.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="BehaviorTree\Composites\" />

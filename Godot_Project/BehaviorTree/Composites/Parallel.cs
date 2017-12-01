@@ -4,11 +4,8 @@ namespace BehaviorTree
 {
 	public class Parallel : BaseComposite
 	{
-		[Export]
-		public ExitCondition successCondition = ExitCondition.Any_Child;
-
-		[Export]
-		public ExitCondition failureCondition = ExitCondition.All_Children;
+		[Export] public ExitCondition successCondition = ExitCondition.Any_Child;
+		[Export] public ExitCondition failureCondition = ExitCondition.All_Children;
 
 
 		public enum ExitCondition
@@ -16,15 +13,6 @@ namespace BehaviorTree
 			First_Child,
 			Any_Child,
 			All_Children
-		}
-
-
-		internal protected override void EnterNode()
-		{
-			for (int i = 0; i < nodes.Count; i++)
-			{
-				nodes[i].EnterNode();
-			}
 		}
 
 
@@ -53,15 +41,15 @@ namespace BehaviorTree
 
 			for (int i = 0; i < nodes.Count; i++)
 			{
-				BehaviorStatus node_state = nodes[i].GetStatus();
+				BehaviorStatus nodeState = nodes[i].GetStatus();
 
-				if (node_state == BehaviorStatus.Running)
+				if (nodeState == BehaviorStatus.Running)
 				{
 					nodes[i].ProcessLogic(delta);
 				}
 				else
 				{
-					if (node_state == BehaviorStatus.Success)
+					if (nodeState == BehaviorStatus.Success)
 					{
 						if (successCondition == ExitCondition.Any_Child)
 						{
@@ -73,7 +61,7 @@ namespace BehaviorTree
 							successes++;
 						}
 					}
-					else if (node_state == BehaviorStatus.Failure)
+					else if (nodeState == BehaviorStatus.Failure)
 					{
 						if (failureCondition == ExitCondition.Any_Child)
 						{

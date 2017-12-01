@@ -2,32 +2,36 @@
 {
 	public class Sequence : BaseComposite
 	{
-		int currentNode = 0;
+		int currentNode;
 
 		protected virtual BehaviorStatus GetContinueStatus() { return BehaviorStatus.Success; }
 		protected virtual BehaviorStatus GetEndStatus() { return BehaviorStatus.Failure; }
 
 
-		internal protected override void EnterNode()
+		internal protected override void ResetNode()
 		{
+			currentNode = 0;
+
 			if (nodes.Count > 0)
 			{
-				nodes[0].EnterNode();
+				nodes[currentNode].ResetNode();
 			}
+
+			base.ResetNode();
 		}
 
 
 		protected override void ExecuteComposite(float delta)
 		{
-			BehaviorStatus node_state = nodes[currentNode].ProcessLogic(delta);
+			BehaviorStatus nodeState = nodes[currentNode].ProcessLogic(delta);
 
-			if (node_state == GetEndStatus())
+			if (nodeState == GetEndStatus())
 			{
 				status = GetEndStatus();
 				return;
 			}
 
-			if (node_state == GetContinueStatus())
+			if (nodeState == GetContinueStatus())
 			{
 				currentNode++;
 
@@ -38,7 +42,6 @@
 				}
 
 				nodes[currentNode].ResetNode();
-				nodes[currentNode].EnterNode();
 			}
 		}
 	}

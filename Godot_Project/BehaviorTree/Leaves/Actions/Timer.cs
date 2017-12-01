@@ -18,6 +18,7 @@
 		internal protected override void ResetNode()
 		{
 			ResetTimer();
+			base.ResetNode();
 		}
 
 

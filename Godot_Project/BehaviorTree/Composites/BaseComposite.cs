@@ -9,12 +9,14 @@ namespace BehaviorTree
 		public List<BehaviorTreeNode> nodes = new List<BehaviorTreeNode>();
 
 
-		internal protected override void EnterNode()
+		internal protected override void ResetNode()
 		{
 			foreach (BehaviorTreeNode node in nodes)
 			{
-				node.EnterNode();
+				node.ResetNode();
 			}
+
+			base.ResetNode();
 		}
 
 

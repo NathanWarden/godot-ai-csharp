@@ -6,12 +6,10 @@ namespace BehaviorTree
 {
 	public class NavAgent3D : Spatial, INavAgent
 	{
-		[Export]
-		float baseMoveSpeed = 5;
+		[Export] float baseMoveSpeed = 5;
 
 		// The navigator will stop when its' speed drops below this value.
-		[Export]
-		public float stopSpeed = 0.01f;
+		[Export] public float stopSpeed = 0.01f;
 
 		float moveSpeed;
 		float stopRate;
@@ -46,6 +44,7 @@ namespace BehaviorTree
 					if (moveSpeed < stopSpeed)
 					{
 						navTarget = null;
+						stopping = false;
 					}
 				}
 			}
@@ -66,7 +65,6 @@ namespace BehaviorTree
 
 		public void TargetUpdated(Node target)
 		{
-			GD.Print("TargetUpdated");
 			navTarget = target as Spatial;
 		}
 

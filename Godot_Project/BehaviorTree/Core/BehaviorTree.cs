@@ -6,8 +6,7 @@ namespace BehaviorTree
 {
 	public class BehaviorTree : Node
 	{
-		[Export]
-		public bool resetOnFailure;
+		[Export] public bool resetOnFailure;
 
 		public INavAgent navigator;
 
@@ -22,7 +21,6 @@ namespace BehaviorTree
 			if (rootNode != null)
 			{
 				rootNode.ResetNode();
-				rootNode.EnterNode();
 			}
 		}
 

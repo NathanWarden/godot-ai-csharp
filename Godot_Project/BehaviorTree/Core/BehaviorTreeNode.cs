@@ -5,6 +5,7 @@ namespace BehaviorTree
 {
 	public abstract class BehaviorTreeNode : Node
 	{
+		[Export] public bool enabled = true;
 		public BehaviorStatus status = BehaviorStatus.Running;
 		protected BehaviorTree behaviorTree;
 
@@ -15,13 +16,9 @@ namespace BehaviorTree
 		}
 
 
-		internal protected virtual void EnterNode() {}
-
-
 		internal protected virtual BehaviorStatus ProcessLogic(float delta)
 		{
 			Execute(delta);
-
 			return GetStatus();
 		}
 
@@ -59,7 +56,7 @@ namespace BehaviorTree
 			{
 				T node = GetChild(i) as T;
 
-				if ( node != null )
+				if ( node != null && node.enabled )
 				{
 					nodes.Add(node);
 				}
