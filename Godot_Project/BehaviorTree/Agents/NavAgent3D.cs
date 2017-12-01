@@ -7,10 +7,18 @@ namespace BehaviorTree
 	public class NavAgent3D : Spatial, INavAgent
 	{
 		[Export]
-		float moveSpeed = 5;
+		float baseMoveSpeed = 5;
+
+		// The navigator will stop when its' speed drops below this value.
+		[Export]
+		public float stopSpeed = 0.01f;
+
+		float moveSpeed;
+		float stopRate;
+		bool stopping;
 
 		Navigation navigation;
-		Spatial navTarget = null;
+		Spatial navTarget;
 		List<Vector3> path = new List<Vector3>();
 
 		float nextPathUpdate = -1;
@@ -26,12 +34,39 @@ namespace BehaviorTree
 		public override void _Process(float delta)
 		{
 			time += delta;
-			MoveAlongPath(delta);
+
+			if (navTarget != null)
+			{
+				MoveAlongPath(delta);
+
+				if (stopping)
+				{
+					moveSpeed = Mathf.Lerp(moveSpeed, 0.0f, stopRate * delta);
+
+					if (moveSpeed < stopSpeed)
+					{
+						navTarget = null;
+					}
+				}
+			}
+		}
+
+
+		public float GetBaseMovementSpeed()
+		{
+			return baseMoveSpeed;
+		}
+
+
+		public void SetMovementSpeed(float speed)
+		{
+			moveSpeed = speed;
 		}
 
 
 		public void TargetUpdated(Node target)
 		{
+			GD.Print("TargetUpdated");
 			navTarget = target as Spatial;
 		}
 
@@ -39,6 +74,14 @@ namespace BehaviorTree
 		public Vector3 GetPosition()
 		{
 			return Translation;
+		}
+
+
+		public void Stop(float stopRate)
+		{
+			GD.Print("Stop");
+			stopping = true;
+			this.stopRate = stopRate;
 		}
 
 

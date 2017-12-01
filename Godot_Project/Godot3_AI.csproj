@@ -58,7 +58,7 @@
     <Compile Include="BehaviorTree\Decorators\BaseDecorator.cs" />
     <Compile Include="BehaviorTree\Leaves\BaseLeaf.cs" />
     <Compile Include="BehaviorTree\Core\BehaviorTreeNode.cs" />
-    <Compile Include="BehaviorTree\Leaves\Actions\Wait.cs" />
+    <Compile Include="BehaviorTree\Leaves\Actions\Timer.cs" />
     <Compile Include="BehaviorTree\Agents\INavAgent.cs" />
     <Compile Include="BehaviorTree\Composites\Sequence.cs" />
     <Compile Include="BehaviorTree\Composites\Selector.cs" />
@@ -67,6 +67,7 @@
     <Compile Include="BehaviorTree\Leaves\Actions\Patrol\Patrol3D.cs" />
     <Compile Include="BehaviorTree\Leaves\Actions\Patrol\Patrol2D.cs" />
     <Compile Include="BehaviorTree\Core\ExtensionMethods.cs" />
+    <Compile Include="BehaviorTree\Leaves\Actions\Stop.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="BehaviorTree\Composites\" />

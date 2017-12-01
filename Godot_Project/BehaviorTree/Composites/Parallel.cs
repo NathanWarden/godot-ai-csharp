@@ -19,6 +19,15 @@ namespace BehaviorTree
 		}
 
 
+		internal protected override void EnterNode()
+		{
+			for (int i = 0; i < nodes.Count; i++)
+			{
+				nodes[i].EnterNode();
+			}
+		}
+
+
 		protected override void ExecuteComposite(float delta)
 		{
 			int successes = 0;

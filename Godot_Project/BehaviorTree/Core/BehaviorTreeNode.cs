@@ -15,10 +15,10 @@ namespace BehaviorTree
 		}
 
 
-		protected abstract void Execute(float delta);
+		internal protected virtual void EnterNode() {}
 
 
-		protected internal virtual BehaviorStatus ProcessLogic(float delta)
+		internal protected virtual BehaviorStatus ProcessLogic(float delta)
 		{
 			Execute(delta);
 
@@ -26,7 +26,10 @@ namespace BehaviorTree
 		}
 
 
-		protected internal virtual void ResetNode()
+		protected abstract void Execute(float delta);
+
+
+		internal protected virtual void ResetNode()
 		{
 			status = BehaviorStatus.Running;
 		}

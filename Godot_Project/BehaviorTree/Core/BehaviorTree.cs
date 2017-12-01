@@ -12,6 +12,7 @@ namespace BehaviorTree
 		public INavAgent navigator;
 
 		BehaviorTreeNode rootNode;
+		BehaviorStatus status = BehaviorStatus.Running;
 
 
 		public override void _Ready()
@@ -21,15 +22,30 @@ namespace BehaviorTree
 			if (rootNode != null)
 			{
 				rootNode.ResetNode();
+				rootNode.EnterNode();
 			}
 		}
 
 
 		public override void _Process(float delta)
 		{
-			if ( rootNode.ProcessLogic(delta) != BehaviorStatus.Running && resetOnFailure )
+			try
 			{
-				rootNode.ResetNode();
+				if (status == BehaviorStatus.Running)
+				{
+					status = rootNode.ProcessLogic(delta);
+
+					if (status != BehaviorStatus.Running && resetOnFailure)
+					{
+						rootNode.ResetNode();
+						status = BehaviorStatus.Running;
+					}
+				}
+			}
+			catch (System.Exception e)
+			{
+				GD.Print(e.Message);
+				GD.Print(e.StackTrace);
 			}
 		}
 

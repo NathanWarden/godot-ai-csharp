@@ -7,6 +7,16 @@
 		protected virtual BehaviorStatus GetContinueStatus() { return BehaviorStatus.Success; }
 		protected virtual BehaviorStatus GetEndStatus() { return BehaviorStatus.Failure; }
 
+
+		internal protected override void EnterNode()
+		{
+			if (nodes.Count > 0)
+			{
+				nodes[0].EnterNode();
+			}
+		}
+
+
 		protected override void ExecuteComposite(float delta)
 		{
 			BehaviorStatus node_state = nodes[currentNode].ProcessLogic(delta);
@@ -26,10 +36,9 @@
 					status = GetContinueStatus();
 					return;
 				}
-				else
-				{
-					nodes[currentNode].ResetNode();
-				}
+
+				nodes[currentNode].ResetNode();
+				nodes[currentNode].EnterNode();
 			}
 		}
 	}

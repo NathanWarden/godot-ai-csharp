@@ -12,6 +12,12 @@ namespace BehaviorTree
 		[Export]
 		public LoopEndMode patrol_end_mode;
 
+		[Export]
+		public bool overrideBaseSpeed;
+
+		[Export]
+		public float patrolSpeed;
+
 		int current_patrol_index;
 		int patrol_direction = 1;
 
@@ -23,6 +29,23 @@ namespace BehaviorTree
 		{
 			Loop,
 			Ping_Pong
+		}
+
+
+		internal protected override void EnterNode()
+		{
+			float speed;
+
+			if (overrideBaseSpeed)
+			{
+				speed = patrolSpeed;
+			}
+			else
+			{
+				speed = behaviorTree.navigator.GetBaseMovementSpeed();
+			}
+
+			behaviorTree.navigator.SetMovementSpeed(speed);
 		}
 
 

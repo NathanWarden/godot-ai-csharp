@@ -1,6 +1,6 @@
 ﻿namespace BehaviorTree
 {
-	public class Wait : BaseLeaf
+	public class Timer : BaseLeaf
 	{
 		[Godot.Export]
 		public float waitTime = 1.0f;

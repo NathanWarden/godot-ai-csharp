@@ -9,7 +9,13 @@ namespace BehaviorTree
 		public List<BehaviorTreeNode> nodes = new List<BehaviorTreeNode>();
 
 
-		protected abstract void ExecuteComposite(float delta);
+		internal protected override void EnterNode()
+		{
+			foreach (BehaviorTreeNode node in nodes)
+			{
+				node.EnterNode();
+			}
+		}
 
 
 		protected sealed override void Execute(float delta)
@@ -23,6 +29,9 @@ namespace BehaviorTree
 				status = BehaviorStatus.Success;
 			}
 		}
+
+
+		protected abstract void ExecuteComposite(float delta);
 
 
 		public override void UpdateChildNodes()
