@@ -4,12 +4,31 @@ using System.Collections.Generic;
 
 namespace BehaviorTree
 {
+	public enum PatrolEndMode
+	{
+		Once,
+		Loop,
+		PingPong,
+		Random
+	}
+
+
+	public enum ContinuePatrolMode
+	{
+		Reset,
+		ContinuePrevious,
+		NearestNode,
+		NearestNextNode,
+		Random
+	}
+
+
 	public abstract class PatrolBase<T> : BehaviorTreeNode where T : Node
 	{
 		[Export] public float waypointThreshold = 2.0f;
-		[Export] public LoopEndMode patrolEndMode = LoopEndMode.Loop;
 		[Export] public bool overrideBaseSpeed;
 		[Export] public float patrolSpeed;
+		[Export] public PatrolEndMode patrolEndMode = PatrolEndMode.Loop;
 		[Export] public ContinuePatrolMode continuePatrolMode;
 
 		int currentPatrolIndex;
@@ -17,25 +36,6 @@ namespace BehaviorTree
 
 		List<T> patrolTargets = new List<T>();
 		Node currentTarget;
-
-
-		public enum LoopEndMode
-		{
-			Once,
-			Loop,
-			PingPong,
-			Random
-		}
-
-
-		public enum ContinuePatrolMode
-		{
-			Reset,
-			ContinuePrevious,
-			NearestNode,
-			NearestNextNode,
-			Random
-		}
 
 
 		internal protected override void ResetNode()
@@ -197,11 +197,11 @@ namespace BehaviorTree
 
 					if (patrolEnded)
 					{
-						if (patrolEndMode == LoopEndMode.Once)
+						if (patrolEndMode == PatrolEndMode.Once)
 						{
 							return BehaviorStatus.Success;
 						}
-						else if (patrolEndMode == LoopEndMode.PingPong)
+						else if (patrolEndMode == PatrolEndMode.PingPong)
 						{
 							currentPatrolIndex -= patrolDirection;
 							patrolDirection *= -1;

@@ -2,18 +2,18 @@
 
 namespace BehaviorTree
 {
+	public enum ParallelExitCondition
+	{
+		FirstChild,
+		AnyChild,
+		AllChildren
+	}
+
+
 	public class Parallel : BaseComposite
 	{
-		[Export] public ExitCondition successCondition = ExitCondition.Any_Child;
-		[Export] public ExitCondition failureCondition = ExitCondition.All_Children;
-
-
-		public enum ExitCondition
-		{
-			First_Child,
-			Any_Child,
-			All_Children
-		}
+		[Export] public ParallelExitCondition successCondition = ParallelExitCondition.AnyChild;
+		[Export] public ParallelExitCondition failureCondition = ParallelExitCondition.AllChildren;
 
 
 		protected override void ExecuteComposite(float delta)
@@ -21,7 +21,7 @@ namespace BehaviorTree
 			int successes = 0;
 			int failures = 0;
 
-			if (successCondition == ExitCondition.First_Child)
+			if (successCondition == ParallelExitCondition.FirstChild)
 			{
 				if (nodes[0].GetStatus() == BehaviorStatus.Success)
 				{
@@ -30,7 +30,7 @@ namespace BehaviorTree
 				}
 			}
 
-			if (failureCondition == ExitCondition.First_Child)
+			if (failureCondition == ParallelExitCondition.FirstChild)
 			{
 				if (nodes[0].GetStatus() == BehaviorStatus.Failure)
 				{
@@ -51,7 +51,7 @@ namespace BehaviorTree
 				{
 					if (nodeState == BehaviorStatus.Success)
 					{
-						if (successCondition == ExitCondition.Any_Child)
+						if (successCondition == ParallelExitCondition.AnyChild)
 						{
 							status = BehaviorStatus.Success;
 							return;
@@ -63,7 +63,7 @@ namespace BehaviorTree
 					}
 					else if (nodeState == BehaviorStatus.Failure)
 					{
-						if (failureCondition == ExitCondition.Any_Child)
+						if (failureCondition == ParallelExitCondition.AnyChild)
 						{
 							status = BehaviorStatus.Failure;
 							return;
@@ -76,12 +76,12 @@ namespace BehaviorTree
 				}
 			}
 
-			if (successCondition == ExitCondition.All_Children && successes == nodes.Count)
+			if (successCondition == ParallelExitCondition.AllChildren && successes == nodes.Count)
 			{
 				status = BehaviorStatus.Success;
 			}
 
-			if (failureCondition == ExitCondition.All_Children && failures == nodes.Count)
+			if (failureCondition == ParallelExitCondition.AllChildren && failures == nodes.Count)
 			{
 				status = BehaviorStatus.Failure;
 			}
