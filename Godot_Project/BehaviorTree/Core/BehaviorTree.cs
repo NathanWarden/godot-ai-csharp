@@ -6,7 +6,10 @@ namespace BehaviorTree
 {
 	public class BehaviorTree : Node
 	{
-		[Export] public bool resetOnFailure;
+		/// <summary>
+		/// If true and the first node has a failure status the tree will be reset. Otherwise, the AI will cease to function.
+		/// </summary>
+		[Export] public bool resetOnFailure = true;
 
 		public INavAgent navigator;
 
@@ -33,10 +36,17 @@ namespace BehaviorTree
 				{
 					status = rootNode.ProcessLogic(delta);
 
-					if (status != BehaviorStatus.Running && resetOnFailure)
+					if (status != BehaviorStatus.Running)
 					{
-						rootNode.ResetNode();
-						status = BehaviorStatus.Running;
+						if (resetOnFailure)
+						{
+							rootNode.ResetNode();
+							status = BehaviorStatus.Running;
+						}
+						else
+						{
+							SetProcess(false);
+						}
 					}
 				}
 			}
