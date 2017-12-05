@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=2]
+[gd_scene load_steps=21 format=2]
 
 [ext_resource path="res://Field.dae" type="PackedScene" id=1]
 [ext_resource path="res://BehaviorTree/Core/BehaviorTree.cs" type="Script" id=2]
@@ -10,6 +10,7 @@
 [ext_resource path="res://BehaviorTree/Leaves/Actions/Patrol/Patrol3D.cs" type="Script" id=8]
 [ext_resource path="res://Oscillator.cs" type="Script" id=9]
 [ext_resource path="res://BehaviorTree/Leaves/Actions/Stop.cs" type="Script" id=10]
+[ext_resource path="res://BehaviorTree/Leaves/Conditions/DistanceCheck/WithinDistance3D.cs" type="Script" id=11]
 
 [sub_resource type="CylinderMesh" id=1]
 
@@ -29,6 +30,7 @@ flags_no_depth_test = false
 flags_use_point_size = false
 flags_world_triplanar = false
 flags_fixed_size = false
+flags_albedo_tex_force_srgb = false
 vertex_color_use_as_albedo = false
 vertex_color_is_srgb = false
 params_diffuse_mode = 1
@@ -87,6 +89,7 @@ flags_no_depth_test = false
 flags_use_point_size = false
 flags_world_triplanar = false
 flags_fixed_size = false
+flags_albedo_tex_force_srgb = false
 vertex_color_use_as_albedo = false
 vertex_color_is_srgb = false
 params_diffuse_mode = 1
@@ -146,6 +149,7 @@ flags_no_depth_test = false
 flags_use_point_size = false
 flags_world_triplanar = false
 flags_fixed_size = false
+flags_albedo_tex_force_srgb = false
 vertex_color_use_as_albedo = false
 vertex_color_is_srgb = false
 params_diffuse_mode = 1
@@ -310,10 +314,17 @@ _sections_unfolded = [ "Transform" ]
 
 editor/display_folded = true
 
+[node name="Ground" parent="Scene Root"]
+
+editor/display_folded = true
+
+[node name="col" parent="Scene Root/Ground"]
+
+editor/display_folded = true
+
 [node name="BehaviorTree" type="Spatial" parent="."]
 
 script = ExtResource( 2 )
-_sections_unfolded = [ "Transform" ]
 resetOnFailure = false
 
 [node name="Navigator" type="Spatial" parent="BehaviorTree"]
@@ -361,10 +372,10 @@ _sections_unfolded = [ "Transform", "material" ]
 [node name="Loop" type="Spatial" parent="BehaviorTree"]
 
 script = ExtResource( 4 )
+enabled = true
 iterations = 0
 infinite = true
 continueOnFail = true
-enabled = true
 
 [node name="Sequence" type="Spatial" parent="BehaviorTree/Loop"]
 
@@ -374,24 +385,26 @@ enabled = true
 [node name="Timer_5" type="Spatial" parent="BehaviorTree/Loop/Sequence"]
 
 script = ExtResource( 6 )
-waitTime = 2.0
 enabled = true
+waitTime = 2.0
 
 [node name="Parallel" type="Spatial" parent="BehaviorTree/Loop/Sequence"]
 
 script = ExtResource( 7 )
+enabled = true
 successCondition = 1
 failureCondition = 2
-enabled = true
 
 [node name="Patrol" type="Spatial" parent="BehaviorTree/Loop/Sequence/Parallel"]
 
 editor/display_folded = true
 script = ExtResource( 8 )
+enabled = true
 waypointThreshold = 2.0
 overrideBaseSpeed = false
 patrolSpeed = 0.0
-enabled = true
+patrolEndMode = 1
+continuePatrolMode = 0
 
 [node name="NavTarget1" type="Spatial" parent="BehaviorTree/Loop/Sequence/Parallel/Patrol"]
 
@@ -461,14 +474,14 @@ _sections_unfolded = [ "Transform", "material" ]
 [node name="Timer_10" type="Spatial" parent="BehaviorTree/Loop/Sequence/Parallel"]
 
 script = ExtResource( 6 )
-waitTime = 2.0
 enabled = true
+waitTime = 2.0
 
 [node name="Stop" type="Spatial" parent="BehaviorTree/Loop/Sequence"]
 
 script = ExtResource( 10 )
-stopRate = 5.0
 enabled = true
+stopRate = 5.0
 
 [node name="Camera" type="Camera" parent="."]
 
@@ -484,7 +497,6 @@ environment = SubResource( 8 )
 h_offset = 0.0
 v_offset = 0.0
 doppler/tracking = 0
-_sections_unfolded = [ "Transform" ]
 
 [node name="DirectionalLight" type="DirectionalLight" parent="."]
 
@@ -527,6 +539,14 @@ normal_bias = 0.0
 interior = false
 compress = false
 data = SubResource( 9 )
+
+[node name="Spatial" type="Spatial" parent="."]
+
+script = ExtResource( 11 )
+enabled = true
+distance = 1.0
+mode = 0
+targetGroup = ""
 
 
 [editable path="Scene Root"]

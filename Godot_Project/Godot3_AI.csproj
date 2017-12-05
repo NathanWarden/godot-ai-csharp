@@ -70,6 +70,13 @@
     <Compile Include="BehaviorTree\Leaves\Actions\Stop.cs" />
     <Compile Include="BehaviorTree\Decorators\Loop.cs" />
     <Compile Include="BehaviorTree\Decorators\Inverter.cs" />
+    <Compile Include="BehaviorTree\Leaves\Conditions\DistanceCheck\BaseClasses\DistanceConditionBase.cs" />
+    <Compile Include="BehaviorTree\Leaves\Conditions\DistanceCheck\BaseClasses\WithinDistanceBase.cs" />
+    <Compile Include="BehaviorTree\Leaves\Conditions\DistanceCheck\WithinDistance3D.cs" />
+    <Compile Include="BehaviorTree\Leaves\Conditions\DistanceCheck\BaseClasses\BeyondDistanceBase.cs" />
+    <Compile Include="BehaviorTree\Leaves\Conditions\DistanceCheck\BeyondDistance3D.cs" />
+    <Compile Include="BehaviorTree\Leaves\Conditions\DistanceCheck\BeyondDistance2D.cs" />
+    <Compile Include="BehaviorTree\Leaves\Conditions\DistanceCheck\WithinDistance2D.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="BehaviorTree\Composites\" />
@@ -79,6 +86,8 @@
     <Folder Include="BehaviorTree\Leaves\Actions\" />
     <Folder Include="BehaviorTree\Leaves\Conditions\" />
     <Folder Include="BehaviorTree\Leaves\Actions\Patrol\" />
+    <Folder Include="BehaviorTree\Leaves\Conditions\DistanceCheck\" />
+    <Folder Include="BehaviorTree\Leaves\Conditions\DistanceCheck\BaseClasses\" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>
