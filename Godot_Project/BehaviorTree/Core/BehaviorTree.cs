@@ -9,6 +9,7 @@ namespace BehaviorTree
 		/// <summary>
 		/// If true and the first node has a failure status the tree will be reset. Otherwise, the AI will cease to function.
 		/// </summary>
+		[Export] public bool resetOnSuccess = true;
 		[Export] public bool resetOnFailure = true;
 
 		public INavAgent navigator;
@@ -38,7 +39,18 @@ namespace BehaviorTree
 
 					if (status != BehaviorStatus.Running)
 					{
-						if (resetOnFailure)
+						bool reset = false;
+
+						if (status == BehaviorStatus.Success && resetOnSuccess)
+						{
+							reset = true;
+						}
+						else
+						{
+							reset = (status == BehaviorStatus.Failure && resetOnFailure);
+						}
+
+						if (reset)
 						{
 							rootNode.ResetNode();
 							status = BehaviorStatus.Running;

@@ -6,36 +6,38 @@ namespace BehaviorTree
 {
 	public enum PatrolEndMode
 	{
-		Once,
 		Loop,
 		PingPong,
-		Random
+		Random,
+		Once
 	}
 
 
 	public enum ContinuePatrolMode
 	{
-		Reset,
 		ContinuePrevious,
 		NearestNode,
-		NearestNextNode,
-		Random
+		Random,
+		Reset
 	}
 
 
 	public abstract class PatrolBase<T> : BehaviorTreeNode where T : Node
 	{
-		[Export] public float waypointThreshold = 2.0f;
+		[Export] public float waypointThreshold = 3.0f;
 		[Export] public bool overrideBaseSpeed;
 		[Export] public float patrolSpeed;
 		[Export] public PatrolEndMode patrolEndMode = PatrolEndMode.Loop;
-		[Export] public ContinuePatrolMode continuePatrolMode;
+		[Export] public ContinuePatrolMode continuePatrolMode = ContinuePatrolMode.ContinuePrevious;
 
 		int currentPatrolIndex;
 		int patrolDirection = 1;
 
 		List<T> patrolTargets = new List<T>();
 		Node currentTarget;
+
+
+		protected abstract Vector3 GetNodePosition(T patrolNode);
 
 
 		internal protected override void ResetNode()
@@ -51,18 +53,10 @@ namespace BehaviorTree
 				speed = behaviorTree.navigator.GetBaseMovementSpeed();
 			}
 
+			currentTarget = null;
 			behaviorTree.navigator.SetMovementSpeed(speed);
 
-			HandleContinuePatrolMode();
-
-			if (currentTarget != null)
-			{
-				behaviorTree.navigator.TargetUpdated(currentTarget);
-			}
-
 			base.ResetNode();
-
-			GD.Print("----- " + status);
 		}
 
 
@@ -75,17 +69,17 @@ namespace BehaviorTree
 					currentPatrolIndex = 0;
 					break;
 
-				/*case ContinuePatrolMode.NearestNode:
-				case ContinuePatrolMode.NearestNextNode:
+				case ContinuePatrolMode.NearestNode:
 					Vector3 thisPos = behaviorTree.navigator.GetPosition();
 					int nearestNode = 0;
-					float nearestSqrMagnitude = Mathf.Infinity;
+					float nearestSqrMagnitude = float.MaxValue;
 
-					for (int i = 1; i < patrolPoints.Length; i++)
+					for (int i = 1; i < patrolTargets.Count; i++)
 					{
-						float thisSqrMagnitude = (thisPos - patrolPoints[i].position).sqrMagnitude;
+						Vector3 targetPosition = GetNodePosition(patrolTargets[i]);
+						float thisSqrMagnitude = thisPos.DistanceSquaredTo(targetPosition);
 
-						if (CheckIfWithinThreshold(thisPos, patrolPoints[i].position, nearestSqrMagnitude))
+						if (thisSqrMagnitude < nearestSqrMagnitude)
 						{
 							nearestSqrMagnitude = thisSqrMagnitude;
 							nearestNode = i;
@@ -94,8 +88,8 @@ namespace BehaviorTree
 
 					if (continuePatrolMode == ContinuePatrolMode.NearestNode)
 						currentPatrolIndex = nearestNode;
-					else if (patrolPoints.Length != 0)
-						currentPatrolIndex = (nearestNode + 1) % patrolPoints.Length;
+					else if (patrolTargets.Count != 0)
+						currentPatrolIndex = (nearestNode + 1) % patrolTargets.Count;
 
 					break;
 
@@ -103,9 +97,11 @@ namespace BehaviorTree
 					break;
 
 				case ContinuePatrolMode.Random:
-					currentPatrolIndex = Random.Range(0, patrolPoints.Length);
-					break;*/
+					currentPatrolIndex = new System.Random().Next(0, patrolTargets.Count);
+					break;
 			}
+
+			currentTarget = patrolTargets[currentPatrolIndex];
 		}
 
 
@@ -115,20 +111,25 @@ namespace BehaviorTree
 			{
 				if (currentTarget == null)
 				{
+					HandleContinuePatrolMode();
+
+					if (currentTarget != null)
+					{
+						behaviorTree.navigator.TargetUpdated(currentTarget);
+					}
+				}
+
+				if (currentTarget == null)
+				{
 					currentTarget = patrolTargets[0];
 					behaviorTree.navigator.TargetUpdated(currentTarget);
 					status = BehaviorStatus.Running;
 					return;
 				}
-				else
-				{
-					//status = CheckPoints();
-					return;
-				}
-			}
 
-			GD.Print("*** Success!");
-			//status = BehaviorStatus.Success;
+				status = CheckPoints();
+				return;
+			}
 		}
 
 
@@ -138,7 +139,10 @@ namespace BehaviorTree
 		}
 
 
-		protected abstract float GetSqrDistanceToNode(T patrolNode);
+		protected float GetSqrDistanceToNode(T patrolNode)
+		{
+			return behaviorTree.navigator.GetPosition().DistanceSquaredTo(GetNodePosition(patrolNode));
+		}
 
 
 		void InitPatrolPoints()

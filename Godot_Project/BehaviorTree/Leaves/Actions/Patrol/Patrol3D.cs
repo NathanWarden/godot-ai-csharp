@@ -5,9 +5,9 @@ namespace BehaviorTree
 {
 	public class Patrol3D : PatrolBase<Spatial>
 	{
-		protected override float GetSqrDistanceToNode(Spatial patrolNode)
+		protected override Vector3 GetNodePosition(Spatial patrolNode)
 		{
-			return behaviorTree.navigator.GetPosition().DistanceSquaredTo(patrolNode.Translation);
+			return patrolNode.Translation;
 		}
 	}
 }

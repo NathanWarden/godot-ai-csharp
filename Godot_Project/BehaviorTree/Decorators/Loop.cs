@@ -34,7 +34,6 @@ namespace BehaviorTree
 					currentIteration++;
 
 					leafNode.ResetNode();
-					GD.Print("---------------");
 				}
 				else if (nodeState == BehaviorStatus.Failure)
 				{

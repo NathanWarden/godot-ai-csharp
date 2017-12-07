@@ -77,7 +77,6 @@ namespace BehaviorTree
 
 		public void Stop(float stopRate)
 		{
-			GD.Print("Stop");
 			stopping = true;
 			this.stopRate = stopRate;
 		}
