@@ -1,0 +1,6 @@
+*.cs eol=lf
+*.sln eol=lf
+*.csproj eol=lf
+
+*.dae eol=lf
+*.import eol=lf
