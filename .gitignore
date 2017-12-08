@@ -12,3 +12,5 @@ Desktop.ini
 Godot_Project/.*
 Godot_Project/obj
 Godot_Project/logs
+Godot_Project/*.userprefs
+
