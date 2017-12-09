@@ -6,10 +6,10 @@ namespace BehaviorTree
 	public interface INavAgent
 	{
 		float GetBaseMovementSpeed();
+		float GetMovementSpeed();
 		void SetMovementSpeed(float speed);
 
-		void TargetUpdated(Node target);
+		void SetTarget(Node target);
 		Vector3 GetPosition();
-		void Stop(float stopRate);
 	}
 }

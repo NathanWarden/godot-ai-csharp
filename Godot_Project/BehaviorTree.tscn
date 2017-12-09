@@ -1,14 +1,15 @@
-[gd_scene load_steps=17 format=2]
+[gd_scene load_steps=20 format=2]
 
 [ext_resource path="res://BehaviorTree/Core/BehaviorTree.cs" type="Script" id=1]
 [ext_resource path="res://BehaviorTree/Agents/NavAgent3D.cs" type="Script" id=2]
 [ext_resource path="res://BehaviorTree/Decorators/Loop.cs" type="Script" id=3]
 [ext_resource path="res://BehaviorTree/Composites/Sequence.cs" type="Script" id=4]
-[ext_resource path="res://BehaviorTree/Leaves/Actions/Timer.cs" type="Script" id=5]
-[ext_resource path="res://BehaviorTree/Composites/Parallel.cs" type="Script" id=6]
-[ext_resource path="res://BehaviorTree/Leaves/Actions/Patrol/Patrol3D.cs" type="Script" id=7]
-[ext_resource path="res://Oscillator.cs" type="Script" id=8]
-[ext_resource path="res://BehaviorTree/Leaves/Actions/Stop.cs" type="Script" id=9]
+[ext_resource path="res://BehaviorTree/Leaves/Actions/Seek/Seek3D.cs" type="Script" id=5]
+[ext_resource path="res://BehaviorTree/Leaves/Actions/Timer.cs" type="Script" id=6]
+[ext_resource path="res://BehaviorTree/Composites/Parallel.cs" type="Script" id=7]
+[ext_resource path="res://BehaviorTree/Leaves/Actions/Patrol/Patrol3D.cs" type="Script" id=8]
+[ext_resource path="res://Oscillator.cs" type="Script" id=9]
+[ext_resource path="res://BehaviorTree/Leaves/Actions/Stop.cs" type="Script" id=10]
 
 [sub_resource type="CylinderMesh" id=1]
 
@@ -193,6 +194,65 @@ proximity_fade_enable = false
 distance_fade_enable = false
 _sections_unfolded = [ "Albedo" ]
 
+[sub_resource type="CubeMesh" id=8]
+
+size = Vector3( 2, 2, 2 )
+subdivide_width = 0
+subdivide_height = 0
+subdivide_depth = 0
+
+[sub_resource type="SpatialMaterial" id=9]
+
+render_priority = 0
+flags_transparent = false
+flags_unshaded = false
+flags_vertex_lighting = false
+flags_no_depth_test = false
+flags_use_point_size = false
+flags_world_triplanar = false
+flags_fixed_size = false
+flags_albedo_tex_force_srgb = false
+vertex_color_use_as_albedo = false
+vertex_color_is_srgb = false
+params_diffuse_mode = 1
+params_specular_mode = 0
+params_blend_mode = 0
+params_cull_mode = 0
+params_depth_draw_mode = 0
+params_line_width = 1.0
+params_point_size = 1.0
+params_billboard_mode = 0
+params_grow = false
+params_use_alpha_scissor = false
+albedo_color = Color( 0, 1, 0, 1 )
+metallic = 0.0
+metallic_specular = 0.5
+metallic_texture_channel = 0
+roughness = 0.0
+roughness_texture_channel = 0
+emission_enabled = false
+normal_enabled = false
+rim_enabled = false
+clearcoat_enabled = false
+anisotropy_enabled = false
+ao_enabled = false
+depth_enabled = false
+subsurf_scatter_enabled = false
+transmission_enabled = false
+refraction_enabled = false
+detail_enabled = false
+uv1_scale = Vector3( 1, 1, 1 )
+uv1_offset = Vector3( 0, 0, 0 )
+uv1_triplanar = false
+uv1_triplanar_sharpness = 1.0
+uv2_scale = Vector3( 1, 1, 1 )
+uv2_offset = Vector3( 0, 0, 0 )
+uv2_triplanar = false
+uv2_triplanar_sharpness = 1.0
+proximity_fade_enable = false
+distance_fade_enable = false
+_sections_unfolded = [ "Albedo" ]
+
 [node name="BehaviorTree" type="Spatial"]
 
 script = ExtResource( 1 )
@@ -205,7 +265,6 @@ editor/display_folded = true
 script = ExtResource( 2 )
 _sections_unfolded = [ "Transform", "Visibility" ]
 baseMoveSpeed = 10.0
-stopSpeed = 0.01
 
 [node name="MeshInstance" type="MeshInstance" parent="Navigator"]
 
@@ -284,15 +343,26 @@ continueOnFail = true
 script = ExtResource( 4 )
 enabled = true
 
-[node name="Timer_5" type="Spatial" parent="Loop/Sequence"]
+[node name="Seek" type="Spatial" parent="Loop/Sequence"]
 
 script = ExtResource( 5 )
+enabled = true
+overrideBaseSpeed = false
+speed = 0.0
+seekGroup = "SeekTargets"
+targetReachedThreshold = 2.0
+targetReachedStatus = 1
+targetNotFoundStatus = -1
+
+[node name="Timer_5" type="Spatial" parent="Loop/Sequence"]
+
+script = ExtResource( 6 )
 enabled = true
 waitTime = 2.0
 
 [node name="Parallel" type="Spatial" parent="Loop/Sequence"]
 
-script = ExtResource( 6 )
+script = ExtResource( 7 )
 enabled = true
 successCondition = 1
 failureCondition = 2
@@ -300,11 +370,11 @@ failureCondition = 2
 [node name="Patrol" type="Spatial" parent="Loop/Sequence/Parallel"]
 
 editor/display_folded = true
-script = ExtResource( 7 )
+script = ExtResource( 8 )
 enabled = true
-waypointThreshold = 3.0
 overrideBaseSpeed = false
-patrolSpeed = 0.0
+speed = 0.0
+waypointThreshold = 3.0
 patrolEndMode = 0
 continuePatrolMode = 0
 
@@ -312,7 +382,7 @@ continuePatrolMode = 0
 
 editor/display_folded = true
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -93.1016 )
-script = ExtResource( 8 )
+script = ExtResource( 9 )
 _sections_unfolded = [ "Transform" ]
 
 [node name="MeshInstance" type="MeshInstance" parent="Loop/Sequence/Parallel/Patrol/NavTarget1"]
@@ -375,14 +445,54 @@ _sections_unfolded = [ "Transform", "material" ]
 
 [node name="Timer_10" type="Spatial" parent="Loop/Sequence/Parallel"]
 
-script = ExtResource( 5 )
+script = ExtResource( 6 )
 enabled = true
 waitTime = 5.0
 
 [node name="Stop" type="Spatial" parent="Loop/Sequence"]
 
-script = ExtResource( 9 )
+script = ExtResource( 10 )
 enabled = true
-stopRate = 5.0
+stopTime = 1.0
+
+[node name="SeekTargets" type="Spatial" parent="."]
+
+[node name="SeekTarget1" type="MeshInstance" parent="SeekTargets" groups=[
+"SeekTargets",
+]]
+
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 8.32688, -3.8147e-06, -51.219 )
+layers = 1
+material_override = null
+cast_shadow = 1
+extra_cull_margin = 0.0
+use_in_baked_light = false
+lod_min_distance = 0.0
+lod_min_hysteresis = 0.0
+lod_max_distance = 0.0
+lod_max_hysteresis = 0.0
+mesh = SubResource( 8 )
+skeleton = NodePath("..")
+material/0 = SubResource( 9 )
+_sections_unfolded = [ "material" ]
+
+[node name="SeekTarget2" type="MeshInstance" parent="SeekTargets" groups=[
+"SeekTargets",
+]]
+
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -7.26419, -3.8147e-06, -14.7006 )
+layers = 1
+material_override = null
+cast_shadow = 1
+extra_cull_margin = 0.0
+use_in_baked_light = false
+lod_min_distance = 0.0
+lod_min_hysteresis = 0.0
+lod_max_distance = 0.0
+lod_max_hysteresis = 0.0
+mesh = SubResource( 8 )
+skeleton = NodePath("..")
+material/0 = SubResource( 9 )
+_sections_unfolded = [ "material" ]
 
 

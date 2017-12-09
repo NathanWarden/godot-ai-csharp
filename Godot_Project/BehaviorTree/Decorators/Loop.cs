@@ -19,27 +19,25 @@ namespace BehaviorTree
 				status = BehaviorStatus.Success;
 				return;
 			}
-			else
+
+			BehaviorStatus nodeState = leafNode.ProcessLogic(delta);
+
+			if (nodeState == BehaviorStatus.Success || (continueOnFail && nodeState == BehaviorStatus.Failure))
 			{
-				BehaviorStatus nodeState = leafNode.ProcessLogic(delta);
-
-				if (nodeState == BehaviorStatus.Success || (continueOnFail && nodeState == BehaviorStatus.Failure))
+				if (currentIteration >= iterations && !infinite)
 				{
-					if (currentIteration >= iterations && !infinite)
-					{
-						status = BehaviorStatus.Success;
-						return;
-					}
-
-					currentIteration++;
-
-					leafNode.ResetNode();
-				}
-				else if (nodeState == BehaviorStatus.Failure)
-				{
-					status = BehaviorStatus.Failure;
+					status = BehaviorStatus.Success;
 					return;
 				}
+
+				currentIteration++;
+
+				leafNode.ResetNode();
+			}
+			else if (nodeState == BehaviorStatus.Failure)
+			{
+				status = BehaviorStatus.Failure;
+				return;
 			}
 
 			status = BehaviorStatus.Running;

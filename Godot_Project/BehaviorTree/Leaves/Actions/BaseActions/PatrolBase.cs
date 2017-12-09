@@ -22,11 +22,9 @@ namespace BehaviorTree
 	}
 
 
-	public abstract class PatrolBase<T> : BehaviorTreeNode where T : Node
+	public abstract class PatrolBase<T> : MovementActionBase where T : Node
 	{
 		[Export] public float waypointThreshold = 3.0f;
-		[Export] public bool overrideBaseSpeed;
-		[Export] public float patrolSpeed;
 		[Export] public PatrolEndMode patrolEndMode = PatrolEndMode.Loop;
 		[Export] public ContinuePatrolMode continuePatrolMode = ContinuePatrolMode.ContinuePrevious;
 
@@ -42,20 +40,7 @@ namespace BehaviorTree
 
 		internal protected override void ResetNode()
 		{
-			float speed;
-
-			if (overrideBaseSpeed)
-			{
-				speed = patrolSpeed;
-			}
-			else
-			{
-				speed = behaviorTree.navigator.GetBaseMovementSpeed();
-			}
-
 			currentTarget = null;
-			behaviorTree.navigator.SetMovementSpeed(speed);
-
 			base.ResetNode();
 		}
 
@@ -115,14 +100,14 @@ namespace BehaviorTree
 
 					if (currentTarget != null)
 					{
-						behaviorTree.navigator.TargetUpdated(currentTarget);
+						behaviorTree.navigator.SetTarget(currentTarget);
 					}
 				}
 
 				if (currentTarget == null)
 				{
 					currentTarget = patrolTargets[0];
-					behaviorTree.navigator.TargetUpdated(currentTarget);
+					behaviorTree.navigator.SetTarget(currentTarget);
 					status = BehaviorStatus.Running;
 					return;
 				}
@@ -219,7 +204,7 @@ namespace BehaviorTree
 					if (currentTarget != newTarget)
 					{
 						currentTarget = newTarget;
-						behaviorTree.navigator.TargetUpdated(newTarget);
+						behaviorTree.navigator.SetTarget(newTarget);
 					}
 				}
 			}

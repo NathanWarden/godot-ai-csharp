@@ -63,7 +63,6 @@
     <Compile Include="BehaviorTree\Composites\Sequence.cs" />
     <Compile Include="BehaviorTree\Composites\Selector.cs" />
     <Compile Include="BehaviorTree\Composites\Parallel.cs" />
-    <Compile Include="BehaviorTree\Leaves\Actions\Patrol\PatrolBase.cs" />
     <Compile Include="BehaviorTree\Leaves\Actions\Patrol\Patrol3D.cs" />
     <Compile Include="BehaviorTree\Leaves\Actions\Patrol\Patrol2D.cs" />
     <Compile Include="BehaviorTree\Core\ExtensionMethods.cs" />
@@ -77,6 +76,11 @@
     <Compile Include="BehaviorTree\Leaves\Conditions\DistanceCheck\BeyondDistance3D.cs" />
     <Compile Include="BehaviorTree\Leaves\Conditions\DistanceCheck\BeyondDistance2D.cs" />
     <Compile Include="BehaviorTree\Leaves\Conditions\DistanceCheck\WithinDistance2D.cs" />
+    <Compile Include="BehaviorTree\Leaves\Actions\Seek\Seek3D.cs" />
+    <Compile Include="BehaviorTree\Leaves\Actions\BaseActions\SeekBase.cs" />
+    <Compile Include="BehaviorTree\Leaves\Actions\BaseActions\PatrolBase.cs" />
+    <Compile Include="BehaviorTree\Leaves\Actions\BaseActions\MovementActionBase.cs" />
+    <Compile Include="BehaviorTree\Leaves\Actions\Seek\Seek2D.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="BehaviorTree\Composites\" />
@@ -88,6 +92,8 @@
     <Folder Include="BehaviorTree\Leaves\Actions\Patrol\" />
     <Folder Include="BehaviorTree\Leaves\Conditions\DistanceCheck\" />
     <Folder Include="BehaviorTree\Leaves\Conditions\DistanceCheck\BaseClasses\" />
+    <Folder Include="BehaviorTree\Leaves\Actions\Seek\" />
+    <Folder Include="BehaviorTree\Leaves\Actions\BaseActions\" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>
