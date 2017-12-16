@@ -7,10 +7,11 @@ namespace BehaviorTree
 	public class NavAgent3D : Spatial, INavAgent
 	{
 		[Export] float baseMoveSpeed = 5;
-
 		float moveSpeed;
 
+		[Export] string navigationNodePath = "";
 		Navigation navigation;
+
 		Spatial navTarget;
 		List<Vector3> path = new List<Vector3>();
 
@@ -20,7 +21,22 @@ namespace BehaviorTree
 
 		public override void _Ready()
 		{
-			navigation = GetParent().GetParent() as Navigation;
+			if ( string.IsNullOrEmpty(navigationNodePath) )
+			{
+				Node parent = GetParent();
+
+				while (navigation == null && parent != null)
+				{
+					navigation = parent as Navigation;
+					parent = parent.GetParent();
+				}
+
+				GD.Print(navigation == null);
+			}
+			else
+			{
+				navigation = GetNode(navigationNodePath) as Navigation;
+			}
 		}
 
 

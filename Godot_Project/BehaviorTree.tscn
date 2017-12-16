@@ -4,12 +4,14 @@
 [ext_resource path="res://BehaviorTree/Agents/NavAgent3D.cs" type="Script" id=2]
 [ext_resource path="res://BehaviorTree/Decorators/Loop.cs" type="Script" id=3]
 [ext_resource path="res://BehaviorTree/Composites/Sequence.cs" type="Script" id=4]
-[ext_resource path="res://BehaviorTree/Leaves/Actions/Seek/Seek3D.cs" type="Script" id=5]
+[ext_resource path="res://BehaviorTree/Leaves/Actions/Seek3D.cs" type="Script" id=5]
 [ext_resource path="res://BehaviorTree/Leaves/Actions/Timer.cs" type="Script" id=6]
 [ext_resource path="res://BehaviorTree/Composites/Parallel.cs" type="Script" id=7]
-[ext_resource path="res://BehaviorTree/Leaves/Actions/Patrol/Patrol3D.cs" type="Script" id=8]
+[ext_resource path="res://BehaviorTree/Leaves/Actions/Patrol3D.cs" type="Script" id=8]
 [ext_resource path="res://Oscillator.cs" type="Script" id=9]
 [ext_resource path="res://BehaviorTree/Leaves/Actions/Stop.cs" type="Script" id=10]
+
+
 
 [sub_resource type="CylinderMesh" id=1]
 

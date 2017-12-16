@@ -12,6 +12,7 @@ namespace BehaviorTree
 		[Export] public bool resetOnSuccess = true;
 		[Export] public bool resetOnFailure = true;
 
+		[Export] string navigatorPath = "";
 		public INavAgent navigator;
 
 		BehaviorTreeNode rootNode;
@@ -79,7 +80,14 @@ namespace BehaviorTree
 
 			if (navigator == null)
 			{
-				navigator = GetRootNode<INavAgent>();
+				if (string.IsNullOrEmpty(navigatorPath))
+				{
+					navigator = GetRootNode<INavAgent>();
+				}
+				else
+				{
+					navigator = GetNode(navigatorPath) as INavAgent;
+				}
 			}
 
 			if (rootNode != null)

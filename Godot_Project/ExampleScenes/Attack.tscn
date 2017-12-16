@@ -1,0 +1,47 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://BehaviorTree/Core/BehaviorTree.cs" type="Script" id=1]
+[ext_resource path="res://BehaviorTree/Leaves/Actions/Patrol3D.cs" type="Script" id=2]
+[ext_resource path="res://ExampleScenes/BaseSetup.tscn" type="PackedScene" id=3]
+
+[node name="Root" type="Spatial"]
+
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.90735e-06, 0 )
+
+[node name="BehaviorTree" type="Spatial" parent="."]
+
+script = ExtResource( 1 )
+resetOnSuccess = true
+resetOnFailure = true
+navigatorPath = "../BaseSetup/NavAgent"
+
+[node name="Patrol" type="Spatial" parent="BehaviorTree"]
+
+script = ExtResource( 2 )
+enabled = true
+overrideBaseSpeed = false
+speed = 0.0
+waypointThreshold = 3.0
+patrolEndMode = 0
+continuePatrolMode = 0
+
+[node name="Point_01" type="Spatial" parent="BehaviorTree/Patrol"]
+
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 26.3162, 0, 26.5569 )
+
+[node name="Point_02" type="Spatial" parent="BehaviorTree/Patrol"]
+
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 27.2205, 0, -27.7791 )
+
+[node name="Point_03" type="Spatial" parent="BehaviorTree/Patrol"]
+
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -25.1372, 0, -27.7791 )
+
+[node name="Point_04" type="Spatial" parent="BehaviorTree/Patrol"]
+
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -26.0415, 0, 26.5569 )
+
+[node name="BaseSetup" parent="." instance=ExtResource( 3 )]
+
+
+[editable path="BaseSetup"]
