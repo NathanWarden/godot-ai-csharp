@@ -8,8 +8,9 @@ namespace BehaviorTree
 		float GetBaseMovementSpeed();
 		float GetMovementSpeed();
 		void SetMovementSpeed(float speed);
-
 		void SetTarget(Node target);
 		Vector3 GetPosition();
+
+		void Attack(AttackData attackData);
 	}
 }

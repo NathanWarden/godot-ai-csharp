@@ -81,6 +81,16 @@
     <Compile Include="BehaviorTree\Leaves\Actions\Patrol3D.cs" />
     <Compile Include="BehaviorTree\Leaves\Actions\Seek2D.cs" />
     <Compile Include="BehaviorTree\Leaves\Actions\Seek3D.cs" />
+    <Compile Include="BehaviorTree\Leaves\Actions\BaseActions\AttackBase.cs" />
+    <Compile Include="BehaviorTree\Leaves\Actions\Attack3D.cs" />
+    <Compile Include="BehaviorTree\AttackSystem\IDamageReceiver.cs" />
+    <Compile Include="BehaviorTree\AttackSystem\AttackData.cs" />
+    <Compile Include="BehaviorTree\ExampleScripts\Player3D.cs" />
+    <Compile Include="BehaviorTree\AttackSystem\Weapons\MeleeWeapon3D.cs" />
+    <Compile Include="BehaviorTree\AttackSystem\Weapons\IWeapon.cs" />
+    <Compile Include="BehaviorTree\AttackSystem\Weapons\Weapon3D.cs" />
+    <Compile Include="BehaviorTree\AttackSystem\Weapons\Weapon2D.cs" />
+    <Compile Include="BehaviorTree\AttackSystem\Weapons\LauncherWeapon3D.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="BehaviorTree\Composites\" />
@@ -92,6 +102,9 @@
     <Folder Include="BehaviorTree\Leaves\Conditions\DistanceCheck\" />
     <Folder Include="BehaviorTree\Leaves\Conditions\DistanceCheck\BaseClasses\" />
     <Folder Include="BehaviorTree\Leaves\Actions\BaseActions\" />
+    <Folder Include="BehaviorTree\AttackSystem\" />
+    <Folder Include="BehaviorTree\ExampleScripts\" />
+    <Folder Include="BehaviorTree\AttackSystem\Weapons\" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>

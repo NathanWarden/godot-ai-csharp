@@ -18,6 +18,9 @@ namespace BehaviorTree
 		float nextPathUpdate = -1;
 		float time;
 
+		[Export] bool deepSearchForWeapons;
+		Dictionary<string, IWeapon> weapons = new Dictionary<string, IWeapon>();
+
 
 		public override void _Ready()
 		{
@@ -36,6 +39,27 @@ namespace BehaviorTree
 			else
 			{
 				navigation = GetNode(navigationNodePath) as Navigation;
+			}
+
+			CollectWeaponsInNode(this, weapons);
+		}
+
+
+		void CollectWeaponsInNode(Node node, Dictionary<string, IWeapon> weaponList)
+		{
+			int childCount = node.GetChildCount();
+
+			for (int i = 0; i < childCount; i++)
+			{
+				if (GetChild(i) is IWeapon weapon)
+				{
+					weaponList[weapon.GetWeaponName()] = weapon;
+				}
+
+				if (deepSearchForWeapons)
+				{
+					CollectWeaponsInNode(GetChild(i), weaponList);
+				}
 			}
 		}
 
@@ -112,6 +136,19 @@ namespace BehaviorTree
 
 				Translation += moveDirection * delta * moveSpeed;
 				UpdatePath();
+			}
+		}
+
+
+		public void Attack(AttackData attackData)
+		{
+			if (weapons.ContainsKey(attackData.weaponName))
+			{
+				weapons[attackData.weaponName].Attack(attackData);
+			}
+			else
+			{
+				GD.Print("No weapon found named '" + attackData.weaponName + "'");
 			}
 		}
 	}
