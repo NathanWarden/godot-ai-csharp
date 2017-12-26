@@ -189,49 +189,34 @@ height = 2.0
 radial_segments = 64
 rings = 4
 
-[node name="Root" type="Spatial"]
+[node name="Root" type="Spatial" index="0"]
 
 _sections_unfolded = [ "Transform" ]
 
-[node name="Navigation" type="Navigation" parent="."]
+[node name="Navigation" type="Navigation" parent="." index="0"]
 
 up_vector = Vector3( 0, 1, 0 )
 
-[node name="Scene Root" parent="Navigation" instance=ExtResource( 1 )]
+[node name="Scene Root" parent="Navigation" index="0" instance=ExtResource( 1 )]
 
 editor/display_folded = true
 
-[node name="BehaviorTree" parent="Navigation" instance=ExtResource( 2 )]
-
-editor/display_folded = true
-navigatorPath = ""
-
-[node name="Navigator" parent="Navigation/BehaviorTree"]
-
-navigationNodePath = ""
-
-[node name="KinematicBody" parent="Navigation/BehaviorTree/Navigator"]
-
-axis_lock_linear_x = false
-axis_lock_linear_y = false
-axis_lock_linear_z = false
-axis_lock_angular_x = false
-axis_lock_angular_y = false
-axis_lock_angular_z = false
-
-[node name="Loop" parent="Navigation/BehaviorTree"]
+[node name="BehaviorTree" parent="Navigation" index="1" instance=ExtResource( 2 )]
 
 editor/display_folded = true
 
-[node name="SeekTargets" parent="Navigation/BehaviorTree"]
+[node name="Loop" parent="Navigation/BehaviorTree" index="1"]
 
 editor/display_folded = true
 
-[node name="Camera" type="Camera" parent="Navigation"]
+[node name="SeekTargets" parent="Navigation/BehaviorTree" index="2"]
+
+editor/display_folded = true
+
+[node name="Camera" type="Camera" parent="Navigation" index="2"]
 
 transform = Transform( -4.37114e-08, 0.929349, -0.369204, 0, 0.369204, 0.929349, 1, 4.06231e-08, -1.61384e-08, -25.2994, 57.81, -50 )
-keep_aspect = 1
-vaspect = true
+keep_aspect = 0
 cull_mask = 1048575
 environment = SubResource( 2 )
 h_offset = 0.0
@@ -244,7 +229,7 @@ size = 1.0
 near = 0.05
 far = 150.0
 
-[node name="DirectionalLight" type="DirectionalLight" parent="Navigation"]
+[node name="DirectionalLight" type="DirectionalLight" parent="Navigation" index="3"]
 
 transform = Transform( 0.736877, 2.98023e-08, 0.676027, -0.458427, 0.734951, 0.499691, -0.496846, -0.67812, 0.541569, 0.74099, 3.38533, -47.2828 )
 layers = 1
@@ -272,7 +257,7 @@ directional_shadow_depth_range = 0
 directional_shadow_max_distance = 200.0
 _sections_unfolded = [ "Shadow" ]
 
-[node name="GIProbe" type="GIProbe" parent="Navigation"]
+[node name="GIProbe" type="GIProbe" parent="Navigation" index="4"]
 
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.74099, 3.38533, -47.2828 )
 layers = 1
@@ -287,7 +272,7 @@ interior = false
 compress = false
 data = SubResource( 3 )
 
-[node name="RigidBody" type="RigidBody" parent="Navigation"]
+[node name="RigidBody" type="RigidBody" parent="Navigation" index="5"]
 
 editor/display_folded = true
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.454964, 17.3961, -42.2859 )
@@ -317,12 +302,12 @@ linear_damp = -1.0
 angular_velocity = Vector3( 0, 0, 0 )
 angular_damp = -1.0
 
-[node name="CollisionShape" type="CollisionShape" parent="Navigation/RigidBody"]
+[node name="CollisionShape" type="CollisionShape" parent="Navigation/RigidBody" index="0"]
 
 shape = SubResource( 4 )
 disabled = false
 
-[node name="MeshInstance" type="MeshInstance" parent="Navigation/RigidBody"]
+[node name="MeshInstance" type="MeshInstance" parent="Navigation/RigidBody" index="1"]
 
 layers = 1
 material_override = null
@@ -337,7 +322,7 @@ mesh = SubResource( 5 )
 skeleton = NodePath("..")
 material/0 = null
 
-[node name="RigidBody2" type="RigidBody" parent="Navigation"]
+[node name="RigidBody2" type="RigidBody" parent="Navigation" index="6"]
 
 editor/display_folded = true
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 5.26271, 17.3961, -42.2859 )
@@ -367,12 +352,12 @@ linear_damp = -1.0
 angular_velocity = Vector3( 0, 0, 0 )
 angular_damp = -1.0
 
-[node name="CollisionShape" type="CollisionShape" parent="Navigation/RigidBody2"]
+[node name="CollisionShape" type="CollisionShape" parent="Navigation/RigidBody2" index="0"]
 
 shape = SubResource( 4 )
 disabled = false
 
-[node name="MeshInstance" type="MeshInstance" parent="Navigation/RigidBody2"]
+[node name="MeshInstance" type="MeshInstance" parent="Navigation/RigidBody2" index="1"]
 
 layers = 1
 material_override = null
@@ -387,7 +372,7 @@ mesh = SubResource( 5 )
 skeleton = NodePath("..")
 material/0 = null
 
-[node name="EnemyBase" type="MeshInstance" parent="." groups=[
+[node name="EnemyBase" type="MeshInstance" parent="." index="1" groups=[
 "EnemyBase",
 ]]
 

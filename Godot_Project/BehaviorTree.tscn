@@ -11,8 +11,6 @@
 [ext_resource path="res://Oscillator.cs" type="Script" id=9]
 [ext_resource path="res://BehaviorTree/Leaves/Actions/Stop.cs" type="Script" id=10]
 
-
-
 [sub_resource type="CylinderMesh" id=1]
 
 top_radius = 1.0
@@ -260,15 +258,18 @@ _sections_unfolded = [ "Albedo" ]
 script = ExtResource( 1 )
 resetOnSuccess = true
 resetOnFailure = true
+navigatorPath = ""
 
-[node name="Navigator" type="Spatial" parent="."]
+[node name="Navigator" type="Spatial" parent="." index="0"]
 
 editor/display_folded = true
 script = ExtResource( 2 )
 _sections_unfolded = [ "Transform", "Visibility" ]
 baseMoveSpeed = 10.0
+navigationNodePath = ""
+deepSearchForWeapons = false
 
-[node name="MeshInstance" type="MeshInstance" parent="Navigator"]
+[node name="MeshInstance" type="MeshInstance" parent="Navigator" index="0"]
 
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0 )
 layers = 1
@@ -285,7 +286,7 @@ skeleton = NodePath("..")
 material/0 = SubResource( 2 )
 _sections_unfolded = [ "Geometry", "Transform", "material" ]
 
-[node name="MeshInstance2" type="MeshInstance" parent="Navigator"]
+[node name="MeshInstance2" type="MeshInstance" parent="Navigator" index="1"]
 
 transform = Transform( 0.1, 0, 0, 0, 0.1, 0, 0, 0, 1, 0, 2.02127, -1.61878 )
 layers = 1
@@ -302,7 +303,7 @@ skeleton = NodePath("..")
 material/0 = SubResource( 4 )
 _sections_unfolded = [ "Transform", "material" ]
 
-[node name="KinematicBody" type="RigidBody" parent="Navigator"]
+[node name="KinematicBody" type="RigidBody" parent="Navigator" index="2"]
 
 input_ray_pickable = true
 input_capture_on_drag = false
@@ -319,20 +320,25 @@ contacts_reported = 0
 contact_monitor = false
 sleeping = false
 can_sleep = false
-axis_lock = 0
+axis_lock_linear_x = false
+axis_lock_linear_y = false
+axis_lock_linear_z = false
+axis_lock_angular_x = false
+axis_lock_angular_y = false
+axis_lock_angular_z = false
 linear_velocity = Vector3( 0, 0, 0 )
 linear_damp = -1.0
 angular_velocity = Vector3( 0, 0, 0 )
 angular_damp = -1.0
 
-[node name="CollisionShape" type="CollisionShape" parent="Navigator/KinematicBody"]
+[node name="CollisionShape" type="CollisionShape" parent="Navigator/KinematicBody" index="0"]
 
 transform = Transform( 1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 1, 0 )
 shape = SubResource( 5 )
 disabled = false
 _sections_unfolded = [ "Transform" ]
 
-[node name="Loop" type="Spatial" parent="."]
+[node name="Loop" type="Spatial" parent="." index="1"]
 
 script = ExtResource( 3 )
 enabled = true
@@ -340,12 +346,12 @@ iterations = 0
 infinite = true
 continueOnFail = true
 
-[node name="Sequence" type="Spatial" parent="Loop"]
+[node name="Sequence" type="Spatial" parent="Loop" index="0"]
 
 script = ExtResource( 4 )
 enabled = true
 
-[node name="Seek" type="Spatial" parent="Loop/Sequence"]
+[node name="Seek" type="Spatial" parent="Loop/Sequence" index="0"]
 
 script = ExtResource( 5 )
 enabled = true
@@ -356,20 +362,20 @@ targetReachedThreshold = 2.0
 targetReachedStatus = 1
 targetNotFoundStatus = -1
 
-[node name="Timer_5" type="Spatial" parent="Loop/Sequence"]
+[node name="Timer_5" type="Spatial" parent="Loop/Sequence" index="1"]
 
 script = ExtResource( 6 )
 enabled = true
 waitTime = 2.0
 
-[node name="Parallel" type="Spatial" parent="Loop/Sequence"]
+[node name="Parallel" type="Spatial" parent="Loop/Sequence" index="2"]
 
 script = ExtResource( 7 )
 enabled = true
 successCondition = 1
 failureCondition = 2
 
-[node name="Patrol" type="Spatial" parent="Loop/Sequence/Parallel"]
+[node name="Patrol" type="Spatial" parent="Loop/Sequence/Parallel" index="0"]
 
 editor/display_folded = true
 script = ExtResource( 8 )
@@ -380,14 +386,14 @@ waypointThreshold = 3.0
 patrolEndMode = 0
 continuePatrolMode = 0
 
-[node name="NavTarget1" type="Spatial" parent="Loop/Sequence/Parallel/Patrol"]
+[node name="NavTarget1" type="Spatial" parent="Loop/Sequence/Parallel/Patrol" index="0"]
 
 editor/display_folded = true
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -93.1016 )
 script = ExtResource( 9 )
 _sections_unfolded = [ "Transform" ]
 
-[node name="MeshInstance" type="MeshInstance" parent="Loop/Sequence/Parallel/Patrol/NavTarget1"]
+[node name="MeshInstance" type="MeshInstance" parent="Loop/Sequence/Parallel/Patrol/NavTarget1" index="0"]
 
 layers = 1
 material_override = null
@@ -403,12 +409,12 @@ skeleton = NodePath("..")
 material/0 = SubResource( 7 )
 _sections_unfolded = [ "material" ]
 
-[node name="NavTarget2" type="Spatial" parent="Loop/Sequence/Parallel/Patrol"]
+[node name="NavTarget2" type="Spatial" parent="Loop/Sequence/Parallel/Patrol" index="1"]
 
 editor/display_folded = true
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -14.9047, 0, -4.22855 )
 
-[node name="MeshInstance2" type="MeshInstance" parent="Loop/Sequence/Parallel/Patrol/NavTarget2"]
+[node name="MeshInstance2" type="MeshInstance" parent="Loop/Sequence/Parallel/Patrol/NavTarget2" index="0"]
 
 layers = 1
 material_override = null
@@ -424,12 +430,12 @@ skeleton = NodePath("..")
 material/0 = SubResource( 7 )
 _sections_unfolded = [ "Transform", "material" ]
 
-[node name="NavTarget3" type="Spatial" parent="Loop/Sequence/Parallel/Patrol"]
+[node name="NavTarget3" type="Spatial" parent="Loop/Sequence/Parallel/Patrol" index="2"]
 
 editor/display_folded = true
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 14.6236, 0, -4.22855 )
 
-[node name="MeshInstance2" type="MeshInstance" parent="Loop/Sequence/Parallel/Patrol/NavTarget3"]
+[node name="MeshInstance2" type="MeshInstance" parent="Loop/Sequence/Parallel/Patrol/NavTarget3" index="0"]
 
 layers = 1
 material_override = null
@@ -445,21 +451,21 @@ skeleton = NodePath("..")
 material/0 = SubResource( 7 )
 _sections_unfolded = [ "Transform", "material" ]
 
-[node name="Timer_10" type="Spatial" parent="Loop/Sequence/Parallel"]
+[node name="Timer_10" type="Spatial" parent="Loop/Sequence/Parallel" index="1"]
 
 script = ExtResource( 6 )
 enabled = true
 waitTime = 5.0
 
-[node name="Stop" type="Spatial" parent="Loop/Sequence"]
+[node name="Stop" type="Spatial" parent="Loop/Sequence" index="3"]
 
 script = ExtResource( 10 )
 enabled = true
 stopTime = 1.0
 
-[node name="SeekTargets" type="Spatial" parent="."]
+[node name="SeekTargets" type="Spatial" parent="." index="2"]
 
-[node name="SeekTarget1" type="MeshInstance" parent="SeekTargets" groups=[
+[node name="SeekTarget1" type="MeshInstance" parent="SeekTargets" index="0" groups=[
 "SeekTargets",
 ]]
 
@@ -478,7 +484,7 @@ skeleton = NodePath("..")
 material/0 = SubResource( 9 )
 _sections_unfolded = [ "material" ]
 
-[node name="SeekTarget2" type="MeshInstance" parent="SeekTargets" groups=[
+[node name="SeekTarget2" type="MeshInstance" parent="SeekTargets" index="1" groups=[
 "SeekTargets",
 ]]
 

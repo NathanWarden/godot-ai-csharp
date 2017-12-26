@@ -18,6 +18,8 @@ namespace BehaviorTree
 		BehaviorTreeNode rootNode;
 		BehaviorStatus status = BehaviorStatus.Running;
 
+		public Dictionary<string, object[]> targets = new Dictionary<string, object[]>();
+
 
 		public override void _Ready()
 		{

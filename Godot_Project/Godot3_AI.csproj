@@ -49,6 +49,7 @@
     <Reference Include="System" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BehaviorTree\Leaves\Data\StoreTargets.cs" />
     <Compile Include="Oscillator.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="BehaviorTree\Agents\NavAgent3D.cs" />
@@ -91,6 +92,7 @@
     <Compile Include="BehaviorTree\AttackSystem\Weapons\Weapon3D.cs" />
     <Compile Include="BehaviorTree\AttackSystem\Weapons\Weapon2D.cs" />
     <Compile Include="BehaviorTree\AttackSystem\Weapons\LauncherWeapon3D.cs" />
+    <Compile Include="BehaviorTree\Leaves\Data\ClearTargets.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="BehaviorTree\Composites\" />
