@@ -36,7 +36,7 @@ namespace BehaviorTree
 		protected abstract void ExecuteComposite(float delta);
 
 
-		public override void UpdateChildNodes()
+		public override void AssignChildNodes()
 		{
 			int nodeCount;
 
@@ -50,7 +50,7 @@ namespace BehaviorTree
 
 			for (int i = 0; i < nodeCount; i++)
 			{
-				nodes[i].UpdateChildNodes();
+				nodes[i].AssignChildNodes();
 			}
 		}
 	}

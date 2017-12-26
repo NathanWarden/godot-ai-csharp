@@ -94,7 +94,7 @@ namespace BehaviorTree
 
 			if (rootNode != null)
 			{
-				rootNode.UpdateChildNodes();
+				rootNode.AssignChildNodes();
 				SetBehaviorTreeOnChildren(rootNode);
 			}
 			else

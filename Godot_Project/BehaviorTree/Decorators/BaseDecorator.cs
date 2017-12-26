@@ -8,7 +8,7 @@ namespace BehaviorTree
 		protected BehaviorTreeNode leafNode;
 
 
-		public override void UpdateChildNodes()
+		public override void AssignChildNodes()
 		{
 			List<BehaviorTreeNode> nodes = GetChildNodesByType<BehaviorTreeNode>();
 			int nodeCount = nodes.Count;
@@ -30,10 +30,10 @@ namespace BehaviorTree
 
 			for (int i = 0; i < nodeCount; i++)
 			{
-				nodes[i].UpdateChildNodes();
+				nodes[i].AssignChildNodes();
 			}
 
-			base.UpdateChildNodes();
+			base.AssignChildNodes();
 		}
 
 

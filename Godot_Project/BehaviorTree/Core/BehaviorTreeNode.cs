@@ -44,7 +44,7 @@ namespace BehaviorTree
 		}
 
 
-		public virtual void UpdateChildNodes() {}
+		public virtual void AssignChildNodes() {}
 
 
 		public List<T> GetChildNodesByType<T>() where T : BehaviorTreeNode

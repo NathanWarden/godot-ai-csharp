@@ -118,7 +118,7 @@ namespace BehaviorTree
 		}
 
 
-		public override void UpdateChildNodes()
+		public override void AssignChildNodes()
 		{
 			InitPatrolPoints();
 		}
