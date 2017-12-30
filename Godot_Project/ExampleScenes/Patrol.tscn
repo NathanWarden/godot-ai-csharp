@@ -43,15 +43,21 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -26.0415, 0, 26.5569 )
 
 [node name="BaseSetup" parent="." index="1" instance=ExtResource( 3 )]
 
-[node name="DirectionalLight" parent="BaseSetup" index="3"]
+[node name="NavAgent" parent="BaseSetup" index="0"]
+
+rotationLerpRate = 5.0
+
+[node name="SunLight" parent="BaseSetup" index="2"]
 
 light_cull_mask = -1
 
-[node name="Camera" parent="BaseSetup" index="4"]
+[node name="SkyLight_01" parent="BaseSetup" index="3"]
 
-vaspect = true
-doppler_tracking = 0
-size = 1.0
+light_cull_mask = -1
+
+[node name="SkyLight_02" parent="BaseSetup" index="4"]
+
+light_cull_mask = -1
 
 
 [editable path="BaseSetup"]

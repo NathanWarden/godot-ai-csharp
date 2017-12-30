@@ -8,6 +8,7 @@ namespace BehaviorTree
 	{
 		[Export] float baseMoveSpeed = 5;
 		float moveSpeed;
+		[Export] float rotationLerpRate = 5.0f;
 
 		[Export] string navigationNodePath = "";
 		Navigation navigation;
@@ -18,7 +19,7 @@ namespace BehaviorTree
 		float nextPathUpdate = -1;
 		float time;
 
-		[Export] bool deepSearchForWeapons;
+		[Export] public bool deepSearchForWeapons;
 		Dictionary<string, IWeapon> weapons = new Dictionary<string, IWeapon>();
 
 
@@ -128,11 +129,13 @@ namespace BehaviorTree
 			{
 				int lastFrameDrawn = Engine.GetFramesDrawn();
 				Vector3 targetPoint = path[0];
-				Vector3 moveDirection = (targetPoint - this.Translation).Normalized();
+				Vector3 moveDirection = (targetPoint - Translation).Normalized();
 
 				Vector3 r = Rotation;
 				LookAt(targetPoint, new Vector3(0, 1, 0));
 				Vector3 rd = Rotation;
+
+				Rotation = r.LinearInterpolate(rd, delta * 5.0f);
 
 				Translation += moveDirection * delta * moveSpeed;
 				UpdatePath();
@@ -144,6 +147,7 @@ namespace BehaviorTree
 		{
 			if (weapons.ContainsKey(attackData.weaponName))
 			{
+				GD.Print("Here");
 				weapons[attackData.weaponName].Attack(attackData);
 			}
 			else

@@ -65,7 +65,7 @@ uv2_triplanar_sharpness = 1.0
 proximity_fade_enable = false
 distance_fade_enable = false
 
-[node name="Root" type="Spatial" index="0"]
+[node name="Root" type="Spatial"]
 
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.90735e-06, 0 )
 
@@ -73,7 +73,6 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.90735e-06, 0 )
 "Player",
 ]]
 
-editor/display_folded = true
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 9.55452, 0, 0 )
 script = ExtResource( 1 )
 _sections_unfolded = [ "Transform" ]
@@ -97,7 +96,6 @@ _sections_unfolded = [ "Transform", "material" ]
 
 [node name="BehaviorTree" type="Spatial" parent="." index="1"]
 
-editor/display_folded = true
 script = ExtResource( 2 )
 resetOnSuccess = true
 resetOnFailure = true
@@ -123,18 +121,28 @@ overrideBaseSpeed = false
 speed = 0.0
 weaponName = "Fist"
 damage = 10.0
-attackGroup = "Enemy"
+attackGroup = "Player"
 damageMethod = "OnDamage"
 
 [node name="BaseSetup" parent="." index="2" instance=ExtResource( 6 )]
 
-editor/display_folded = true
+[node name="NavAgent" parent="BaseSetup" index="0"]
+
+rotationLerpRate = 5.0
 
 [node name="LauncherWeapon" parent="BaseSetup/NavAgent" index="2"]
 
 weaponName = "Weapon Name"
 
-[node name="DirectionalLight" parent="BaseSetup" index="3"]
+[node name="SunLight" parent="BaseSetup" index="2"]
+
+light_cull_mask = -1
+
+[node name="SkyLight_01" parent="BaseSetup" index="3"]
+
+light_cull_mask = -1
+
+[node name="SkyLight_02" parent="BaseSetup" index="4"]
 
 light_cull_mask = -1
 

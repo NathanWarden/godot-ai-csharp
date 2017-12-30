@@ -50,6 +50,10 @@ namespace BehaviorTree
 
 				behaviorTree.navigator.Attack(attackData);
 			}
+			else
+			{
+				GD.Print("No target");
+			}
 		}
 
 
@@ -57,11 +61,17 @@ namespace BehaviorTree
 		{
 			object[] targets = GetTree().GetNodesInGroup(attackGroup);
 
+			GD.Print(targets.Length.ToString());
+
 			for (int i = 0; i < targets.Length; i++)
 			{
 				if (targets[i] is T result)
 				{
 					return result;
+				}
+				else
+				{
+					GD.Print((targets[i] as Spatial == null).ToString());
 				}
 			}
 
