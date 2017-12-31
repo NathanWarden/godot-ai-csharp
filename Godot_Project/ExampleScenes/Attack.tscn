@@ -1,11 +1,12 @@
-[gd_scene load_steps=9 format=2]
+[gd_scene load_steps=10 format=2]
 
 [ext_resource path="res://BehaviorTree/ExampleScripts/Player3D.cs" type="Script" id=1]
 [ext_resource path="res://BehaviorTree/Core/BehaviorTree.cs" type="Script" id=2]
 [ext_resource path="res://BehaviorTree/Composites/Sequence.cs" type="Script" id=3]
 [ext_resource path="res://BehaviorTree/Leaves/Data/StoreTargets.cs" type="Script" id=4]
-[ext_resource path="res://BehaviorTree/Leaves/Actions/Attack3D.cs" type="Script" id=5]
-[ext_resource path="res://ExampleScenes/BaseSetup.tscn" type="PackedScene" id=6]
+[ext_resource path="res://BehaviorTree/Leaves/Actions/RotateToTarget3D.cs" type="Script" id=5]
+[ext_resource path="res://BehaviorTree/Leaves/Actions/Attack3D.cs" type="Script" id=6]
+[ext_resource path="res://ExampleScenes/BaseSetup.tscn" type="PackedScene" id=7]
 
 [sub_resource type="CubeMesh" id=1]
 
@@ -65,7 +66,7 @@ uv2_triplanar_sharpness = 1.0
 proximity_fade_enable = false
 distance_fade_enable = false
 
-[node name="Root" type="Spatial"]
+[node name="Root" type="Spatial" index="0"]
 
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.90735e-06, 0 )
 
@@ -113,9 +114,17 @@ enabled = true
 groupName = "Player"
 storeSuccessCondition = 0
 
-[node name="Attack" type="Spatial" parent="BehaviorTree/Sequence" index="1"]
+[node name="RotateToTarget" type="Spatial" parent="BehaviorTree/Sequence" index="1"]
 
 script = ExtResource( 5 )
+enabled = true
+targetGroup = "Player"
+rotationLerpRate = 5.0
+successAngle = 1.0
+
+[node name="Attack" type="Spatial" parent="BehaviorTree/Sequence" index="2"]
+
+script = ExtResource( 6 )
 enabled = true
 overrideBaseSpeed = false
 speed = 0.0
@@ -124,11 +133,7 @@ damage = 10.0
 attackGroup = "Player"
 damageMethod = "OnDamage"
 
-[node name="BaseSetup" parent="." index="2" instance=ExtResource( 6 )]
-
-[node name="NavAgent" parent="BaseSetup" index="0"]
-
-rotationLerpRate = 5.0
+[node name="BaseSetup" parent="." index="2" instance=ExtResource( 7 )]
 
 [node name="LauncherWeapon" parent="BaseSetup/NavAgent" index="2"]
 

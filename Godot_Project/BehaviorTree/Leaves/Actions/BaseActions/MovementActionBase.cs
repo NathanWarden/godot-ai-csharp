@@ -2,7 +2,7 @@
 
 namespace BehaviorTree
 {
-	public abstract class MovementActionBase : BehaviorTreeNode
+	public abstract class MovementActionBase : BaseLeaf
 	{
 		[Export] public bool overrideBaseSpeed;
 		[Export] public float speed;

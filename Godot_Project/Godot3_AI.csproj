@@ -93,6 +93,8 @@
     <Compile Include="BehaviorTree\AttackSystem\Weapons\Weapon2D.cs" />
     <Compile Include="BehaviorTree\AttackSystem\Weapons\LauncherWeapon3D.cs" />
     <Compile Include="BehaviorTree\Leaves\Data\ClearTargets.cs" />
+    <Compile Include="BehaviorTree\Leaves\Actions\RotateToTarget3D.cs" />
+    <Compile Include="BehaviorTree\Leaves\Actions\BaseActions\RotateToTargetBase.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="BehaviorTree\Composites\" />

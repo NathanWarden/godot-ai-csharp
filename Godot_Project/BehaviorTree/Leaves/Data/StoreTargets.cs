@@ -11,7 +11,7 @@ namespace BehaviorTree
 	}
 
 
-	public class StoreTargets : BehaviorTreeNode
+	public class StoreTargets : BaseLeaf
 	{
 		[Export] public string groupName = "Player";
 		[Export] public StoreSuccessCondition storeSuccessCondition = StoreSuccessCondition.FailIfNoneFound;

@@ -130,14 +130,12 @@ namespace BehaviorTree
 				int lastFrameDrawn = Engine.GetFramesDrawn();
 				Vector3 targetPoint = path[0];
 				Vector3 moveDirection = (targetPoint - Translation).Normalized();
-
 				Vector3 r = Rotation;
-				LookAt(targetPoint, new Vector3(0, 1, 0));
-				Vector3 rd = Rotation;
-
-				Rotation = r.LinearInterpolate(rd, delta * 5.0f);
 
 				Translation += moveDirection * delta * moveSpeed;
+				LookAt(targetPoint, new Vector3(0, 1, 0));
+				Rotation = r.LinearInterpolate(Rotation, delta * rotationLerpRate);
+
 				UpdatePath();
 			}
 		}

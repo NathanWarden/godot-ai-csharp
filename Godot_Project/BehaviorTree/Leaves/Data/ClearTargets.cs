@@ -1,6 +1,6 @@
 ﻿namespace BehaviorTree
 {
-	public class ClearTargets : BehaviorTreeNode
+	public class ClearTargets : BaseLeaf
 	{
 		public string groupName = "Player";
 
