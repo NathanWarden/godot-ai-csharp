@@ -1,10 +1,11 @@
-[gd_scene load_steps=11 format=2]
+[gd_scene load_steps=12 format=2]
 
 [ext_resource path="res://BehaviorTree/Agents/NavAgent3D.cs" type="Script" id=1]
 [ext_resource path="res://BehaviorTree/AttackSystem/Weapons/MeleeWeapon3D.cs" type="Script" id=2]
 [ext_resource path="res://BehaviorTree/AttackSystem/Weapons/LauncherWeapon3D.cs" type="Script" id=3]
-[ext_resource path="res://Meshes/scene_03.dae" type="PackedScene" id=4]
-[ext_resource path="res://ExampleScenes/Ground.tex" type="Texture" id=5]
+[ext_resource path="res://ExampleScenes/Projectiles/Laser.tscn" type="PackedScene" id=4]
+[ext_resource path="res://Meshes/scene_03.dae" type="PackedScene" id=5]
+[ext_resource path="res://ExampleScenes/Ground.tex" type="Texture" id=6]
 
 [sub_resource type="CylinderMesh" id=1]
 
@@ -103,7 +104,7 @@ octree = PoolByteArray( 10, 0, 9, 0, 9, 0, 4, 0, 4, 0, 4, 0, 4, 0, 4, 0, 4, 0, 1
 cell_space_transform = Transform( 0.370718, 0, 0, 0, 0.370718, 0, 0, 0, 0.370718, 15.8498, 1.5229, 16 )
 cell_subdiv = 6
 energy = 1.0
-user_data = [ NodePath("../Navigation/Scene Root/Ground"), ExtResource( 5 ), -1 ]
+user_data = [ NodePath("../Navigation/Scene Root/Ground"), ExtResource( 6 ), -1 ]
 
 [node name="BaseSetup" type="Spatial" index="0"]
 
@@ -160,16 +161,19 @@ weaponName = "Fist"
 
 [node name="LauncherWeapon" type="Spatial" parent="NavAgent" index="2"]
 
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.78965, 1.90562 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.78965, -1.90562 )
 script = ExtResource( 3 )
+_sections_unfolded = [ "Transform" ]
 weaponName = "Launcher"
+projectileScene = ExtResource( 4 )
+poolProjectiles = true
 
 [node name="Navigation" type="Navigation" parent="." index="1"]
 
 editor/display_folded = true
 up_vector = Vector3( 0, 1, 0 )
 
-[node name="Scene Root" parent="Navigation" index="0" instance=ExtResource( 4 )]
+[node name="Scene Root" parent="Navigation" index="0" instance=ExtResource( 5 )]
 
 editor/display_folded = true
 

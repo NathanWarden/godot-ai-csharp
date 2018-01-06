@@ -13,11 +13,27 @@ namespace BehaviorTree
 		}
 
 
-		public void Attack(AttackData attackData)
+		public bool CanAttack()
+		{
+			return true;
+		}
+
+
+		public virtual void ProcessAttack(AttackData attackData)
 		{
 			IDamageReceiver damageReceiver = attackData.target as IDamageReceiver;
 
-			damageReceiver.OnDamage(attackData);
+			if (damageReceiver != null)
+			{
+				damageReceiver.OnDamage(attackData);
+			}
+			else
+			{
+				if (attackData.target.HasMethod(attackData.method))
+				{
+					attackData.target.Call(attackData.method, attackData);
+				}
+			}
 		}
 	}
 }

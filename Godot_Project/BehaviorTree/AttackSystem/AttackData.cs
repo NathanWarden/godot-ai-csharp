@@ -4,7 +4,7 @@ namespace BehaviorTree
 {
 	public struct AttackData
 	{
-		public Node attacker;
+		public BehaviorTreeNode attacker;
 		public Node target;
 		public float damage;
 		public string method;

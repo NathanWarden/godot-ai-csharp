@@ -7,7 +7,7 @@ namespace BehaviorTree
 	{
 		[Export] public bool enabled = true;
 		public BehaviorStatus status = BehaviorStatus.Running;
-		protected BehaviorTree behaviorTree;
+		public BehaviorTree behaviorTree { get; protected set; }
 
 
 		public override void _Ready()

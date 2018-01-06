@@ -13,7 +13,13 @@ namespace BehaviorTree
 		}
 
 
-		public void Attack(AttackData attackData)
+		public bool CanAttack()
+		{
+			return true;
+		}
+
+
+		public virtual void ProcessAttack(AttackData attackData)
 		{
 			IDamageReceiver damageReceiver = attackData.target as IDamageReceiver;
 

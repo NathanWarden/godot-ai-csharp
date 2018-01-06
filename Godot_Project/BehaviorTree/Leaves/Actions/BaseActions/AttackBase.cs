@@ -48,7 +48,7 @@ namespace BehaviorTree
 					deltaTime = delta
 				};
 
-				behaviorTree.navigator.Attack(attackData);
+				behaviorTree.navigator.Attack(delta, attackData);
 			}
 			else
 			{

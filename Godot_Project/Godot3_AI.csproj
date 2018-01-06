@@ -95,6 +95,8 @@
     <Compile Include="BehaviorTree\Leaves\Data\ClearTargets.cs" />
     <Compile Include="BehaviorTree\Leaves\Actions\RotateToTarget3D.cs" />
     <Compile Include="BehaviorTree\Leaves\Actions\BaseActions\RotateToTargetBase.cs" />
+    <Compile Include="BehaviorTree\AttackSystem\Projectiles\IProjectile.cs" />
+    <Compile Include="BehaviorTree\AttackSystem\Projectiles\Projectile3D.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="BehaviorTree\Composites\" />
@@ -109,6 +111,7 @@
     <Folder Include="BehaviorTree\AttackSystem\" />
     <Folder Include="BehaviorTree\ExampleScripts\" />
     <Folder Include="BehaviorTree\AttackSystem\Weapons\" />
+    <Folder Include="BehaviorTree\AttackSystem\Projectiles\" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>

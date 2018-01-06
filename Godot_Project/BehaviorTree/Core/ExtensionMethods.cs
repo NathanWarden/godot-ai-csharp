@@ -11,6 +11,28 @@ namespace BehaviorTree
 		}
 
 
+		public static T GetNodeInChildrenByType<T>(this Node node) where T : Node
+		{
+			if (node is T)
+			{
+				return node as T;
+			}
+
+			int childCount = node.GetChildCount();
+			for (int i = 0; i < childCount; i++)
+			{
+				T result = GetNodeInChildrenByType<T>(node.GetChild(i));
+
+				if (result != null)
+				{
+					return result;
+				}
+			}
+
+			return null;
+		}
+
+
 		/*public static Vector3 ToVector3(this Quat quat)
 		{
 			Vector3 v;

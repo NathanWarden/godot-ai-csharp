@@ -76,6 +76,12 @@ namespace BehaviorTree
 		}
 
 
+		public Node GetNode()
+		{
+			return this;
+		}
+
+
 		public float GetBaseMovementSpeed()
 		{
 			return baseMoveSpeed;
@@ -141,12 +147,14 @@ namespace BehaviorTree
 		}
 
 
-		public void Attack(AttackData attackData)
+		public void Attack(float delta, AttackData attackData)
 		{
 			if (weapons.ContainsKey(attackData.weaponName))
 			{
-				GD.Print("Here");
-				weapons[attackData.weaponName].Attack(attackData);
+				if (weapons[attackData.weaponName].CanAttack())
+				{
+					weapons[attackData.weaponName].ProcessAttack(attackData);
+				}
 			}
 			else
 			{
