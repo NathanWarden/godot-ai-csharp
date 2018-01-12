@@ -1,4 +1,4 @@
-﻿using Godot;
+using Godot;
 using System.Collections.Generic;
 
 namespace BehaviorTree
@@ -8,12 +8,6 @@ namespace BehaviorTree
 		[Export] public bool enabled = true;
 		public BehaviorStatus status = BehaviorStatus.Running;
 		public BehaviorTree behaviorTree { get; protected set; }
-
-
-		public override void _Ready()
-		{
-			ResetNode();
-		}
 
 
 		internal protected virtual BehaviorStatus ProcessLogic(float delta)
