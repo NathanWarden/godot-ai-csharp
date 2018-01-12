@@ -37,7 +37,10 @@ namespace BehaviorTree
 
 			for (int i = 0; i < targetNodes.Count; i++)
 			{
-				targetNodes.Add(targetNodes[i] as T);
+				if (targetNodes[i] is T result)
+				{
+					targetNodes.Add(result);
+				}
 			}
 		}
 
