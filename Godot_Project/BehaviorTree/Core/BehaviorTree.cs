@@ -95,7 +95,7 @@ namespace BehaviorTree
 			if (rootNode != null)
 			{
 				rootNode.AssignChildNodes();
-				SetBehaviorTreeOnChildren(rootNode);
+				AssignBehaviorTreeOnChildren(rootNode);
 			}
 			else
 			{
@@ -120,7 +120,7 @@ namespace BehaviorTree
 		}
 
 
-		void SetBehaviorTreeOnChildren(BehaviorTreeNode node)
+		void AssignBehaviorTreeOnChildren(BehaviorTreeNode node)
 		{
 			List<BehaviorTreeNode> nodes = node.GetChildNodesByType<BehaviorTreeNode>();
 
@@ -129,7 +129,7 @@ namespace BehaviorTree
 			for (int i = 0; i < nodes.Count; i++)
 			{
 				nodes[i].SetBehaviorTree(this);
-				SetBehaviorTreeOnChildren(nodes[i]);
+				AssignBehaviorTreeOnChildren(nodes[i]);
 			}
 		}
 	}
