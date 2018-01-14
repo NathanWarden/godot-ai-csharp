@@ -23,6 +23,7 @@ namespace BehaviorTree
 
 		T[] targets = new T[0];
 
+
 		internal protected override void ResetNode()
 		{
 			CollectTargets();
@@ -32,16 +33,18 @@ namespace BehaviorTree
 
 		void CollectTargets()
 		{
-			List<Node> targetNodes = new List<Node>();
 			object[] nodesInGroup = GetTree().GetNodesInGroup(targetGroup);
+			List<T> targetNodes = new List<T>();
 
-			for (int i = 0; i < targetNodes.Count; i++)
+			for (int i = 0; i < nodesInGroup.Length; i++)
 			{
-				if (targetNodes[i] is T result)
+				if (nodesInGroup[i] is T result)
 				{
 					targetNodes.Add(result);
 				}
 			}
+
+			targets = targetNodes.ToArray();
 		}
 
 
@@ -65,7 +68,7 @@ namespace BehaviorTree
 
 				if (!result && mode == DistanceMode.All)
 				{
-					return BehaviorStatus.Failure;
+					return BehaviorStatus.Running;
 				}
 
 				if (result)
@@ -84,7 +87,7 @@ namespace BehaviorTree
 				}
 			}
 
-			return BehaviorStatus.Failure;
+			return BehaviorStatus.Running;
 		}
 
 
