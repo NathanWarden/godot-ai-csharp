@@ -12,7 +12,7 @@ namespace BehaviorTree
 
 		protected override bool CheckDistance(Vector3 navAgentPosition, Vector3 targetPosition, float sqrDistanceThreshold)
 		{
-			return navAgentPosition.DistanceSquaredTo(targetPosition) < sqrDistanceThreshold;
+			return navAgentPosition.DistanceSquaredTo(targetPosition) > sqrDistanceThreshold;
 		}
 	}
 }
