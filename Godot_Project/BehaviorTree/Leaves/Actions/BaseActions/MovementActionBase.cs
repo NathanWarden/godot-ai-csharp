@@ -7,7 +7,8 @@ namespace BehaviorTree
 		[Export] public bool overrideBaseSpeed;
 		[Export] public float speed;
 
-		internal protected override void ResetNode()
+
+		protected sealed override void Execute(float delta)
 		{
 			float newSpeed;
 
@@ -22,7 +23,10 @@ namespace BehaviorTree
 
 			behaviorTree.navigator.SetMovementSpeed(newSpeed);
 
-			base.ResetNode();
+			MovementActionExecute(delta);
 		}
+
+
+		protected virtual void MovementActionExecute(float delta) {}
 	}
 }

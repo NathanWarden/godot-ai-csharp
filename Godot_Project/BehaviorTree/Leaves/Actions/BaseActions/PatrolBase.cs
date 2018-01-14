@@ -90,7 +90,7 @@ namespace BehaviorTree
 		}
 
 
-		protected override void Execute(float delta)
+		protected override void MovementActionExecute(float delta)
 		{
 			if (patrolTargets.Count > 0)
 			{
