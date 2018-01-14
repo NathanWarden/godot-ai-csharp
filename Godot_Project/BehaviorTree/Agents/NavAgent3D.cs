@@ -131,7 +131,7 @@ namespace BehaviorTree
 				path.RemoveAt(0);
 			}
 
-			if (path.Count > 0)
+			if (path.Count > 0 && moveSpeed > float.Epsilon)
 			{
 				int lastFrameDrawn = Engine.GetFramesDrawn();
 				Vector3 targetPoint = path[0];
