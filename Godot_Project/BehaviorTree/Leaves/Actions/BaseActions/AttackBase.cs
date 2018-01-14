@@ -10,6 +10,12 @@ namespace BehaviorTree
 		[Export] public string damageMethod = "OnDamage";
 
 
+		public AttackBase()
+		{
+			overrideBaseSpeed = true;
+		}
+
+
 		internal protected override void ResetNode()
 		{
 			base.ResetNode();
