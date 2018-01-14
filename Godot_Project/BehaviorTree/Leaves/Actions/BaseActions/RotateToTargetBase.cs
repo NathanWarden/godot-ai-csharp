@@ -5,26 +5,26 @@ namespace BehaviorTree
 	public abstract class RotateToTargetBase<T> : BaseLeaf where T : Node
 	{
 		[Export] public string targetGroup = "Player";
-		[Export] public float rotationLerpRate = 5.0f;
-		[Export] public float successAngle = 1.0f;
-		protected float sqrSuccessAngle;
+		[Export] public float rotationTime = 0.25f;
+		protected float lerpTime;
 
 
 		internal protected override void ResetNode()
 		{
 			base.ResetNode();
-			sqrSuccessAngle = successAngle * successAngle;
+			lerpTime = 0.0f;
 		}
 
 
 		protected sealed override void Execute(float delta)
 		{
 			T target = GetTarget();
-			Rotate(delta, target);
+			lerpTime += delta;
+			Rotate(lerpTime/rotationTime, target);
 		}
 
 
-		protected abstract void Rotate(float delta, T target);
+		protected abstract void Rotate(float weight, T target);
 
 
 		protected T GetTarget()

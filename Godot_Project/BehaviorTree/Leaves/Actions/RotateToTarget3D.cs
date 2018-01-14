@@ -4,19 +4,29 @@ namespace BehaviorTree
 {
 	public class RotateToTarget3D : RotateToTargetBase<Spatial>
 	{
-		protected override void Rotate(float delta, Spatial target)
+		Spatial agent;
+		Vector3 startRotation;
+
+
+		internal protected override void ResetNode()
 		{
-			Spatial agent = behaviorTree.navigator as Spatial;
-			Vector3 r = agent.Rotation;
+			base.ResetNode();
+			agent = behaviorTree.navigator as Spatial;
+			startRotation = agent.Rotation;
+		}
+
+
+		protected override void Rotate(float weight, Spatial target)
+		{
 			Vector3 targetPoint = target.Translation;
-			Vector3 angleDifference;
 
 			agent.LookAt(targetPoint, new Vector3(0, 1, 0));
-			angleDifference = r - agent.Rotation;
-			agent.Rotation = r.LinearInterpolate(agent.Rotation, delta * rotationLerpRate);
+			Vector3 targetRotation = agent.Rotation;
+			agent.Rotation = startRotation.LinearInterpolate(agent.Rotation, weight);
 
-			if (Mathf.Rad2Deg(angleDifference.LengthSquared()) < sqrSuccessAngle)
+			if (weight >= 1.0f)
 			{
+				GD.Print("Within angle!");
 				status = BehaviorStatus.Success;
 			}
 		}
