@@ -1,0 +1,31 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://BehaviorTree/Leaves/Actions/Patrol3D.cs" type="Script" id=1]
+
+[node name="Patrol" type="Spatial"]
+
+script = ExtResource( 1 )
+enabled = true
+overrideBaseSpeed = false
+speed = 0.0
+waypointThreshold = 3.0
+patrolEndMode = 0
+continuePatrolMode = 0
+
+[node name="Point_01" type="Spatial" parent="." index="0"]
+
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 26.3162, 0, 26.5569 )
+
+[node name="Point_02" type="Spatial" parent="." index="1"]
+
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 27.2205, 0, -27.7791 )
+
+[node name="Point_03" type="Spatial" parent="." index="2"]
+
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -25.1372, 0, -27.7791 )
+
+[node name="Point_04" type="Spatial" parent="." index="3"]
+
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -26.0415, 0, 26.5569 )
+
+
