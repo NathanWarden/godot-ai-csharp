@@ -6,6 +6,7 @@ namespace BehaviorTree
 {
 	public class BehaviorTree : Node
 	{
+		[Export] public bool enabled = true;
 		/// <summary>
 		/// If true and the first node has a failure status the tree will be reset. Otherwise, the AI will cease to function.
 		/// </summary>
@@ -34,6 +35,11 @@ namespace BehaviorTree
 
 		public override void _Process(float delta)
 		{
+			if (!enabled)
+			{
+				return;
+			}
+
 			try
 			{
 				if (status == BehaviorStatus.Running)
