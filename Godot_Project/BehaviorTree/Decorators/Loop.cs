@@ -7,7 +7,6 @@ namespace BehaviorTree
 	{
 		[Export] public int iterations;
 		[Export] public bool infinite;
-		[Export] public bool continueOnFail;	
 
 		int currentIteration;
 
@@ -22,7 +21,7 @@ namespace BehaviorTree
 
 			BehaviorStatus nodeState = leafNode.ProcessLogic(delta);
 
-			if (nodeState == BehaviorStatus.Success || (continueOnFail && nodeState == BehaviorStatus.Failure))
+			if (nodeState == BehaviorStatus.Success)
 			{
 				if (currentIteration >= iterations && !infinite)
 				{
