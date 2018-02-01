@@ -180,7 +180,6 @@ script = ExtResource( 8 )
 enabled = true
 iterations = 0
 infinite = true
-continueOnFail = false
 
 [node name="Sequence" type="Spatial" parent="BehaviorTree/BehaviorSequence/AttackLoop" index="0"]
 
@@ -208,9 +207,10 @@ enabled = true
 overrideBaseSpeed = true
 speed = 0.0
 weaponName = "Launcher"
-damage = 0.0
+damage = 50.0
 attackGroup = "Player"
 damageMethod = "OnDamage"
+statusIfNoTarget = 1
 
 [node name="BaseSetup" parent="." index="2" instance=ExtResource( 12 )]
 

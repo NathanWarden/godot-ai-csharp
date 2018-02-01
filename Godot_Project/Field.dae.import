@@ -6,7 +6,11 @@ path="res://.import/Field.dae-1856af14e73ea2330051a22f9f7ea4ad.scn"
 
 [deps]
 
+source_file="res://Field.dae"
 source_md5="e341759d64147f34337ef813cc12e7a6"
+
+dest_files=[ "res://.import/Field.dae-1856af14e73ea2330051a22f9f7ea4ad.scn" ]
+dest_md5="748fa9d9cfc800d17276139eb65f37c2"
 
 [params]
 

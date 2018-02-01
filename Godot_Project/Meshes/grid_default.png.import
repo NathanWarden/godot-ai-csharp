@@ -7,7 +7,11 @@ path.etc2="res://.import/grid_default.png-d70f242c379990a079b4f22ba9d11a2e.etc2.
 
 [deps]
 
+source_file="res://Meshes/grid_default.png"
 source_md5="b29050677f844239c1b3d72a45320e9a"
+
+dest_files=[ "res://.import/grid_default.png-d70f242c379990a079b4f22ba9d11a2e.s3tc.stex", "res://.import/grid_default.png-d70f242c379990a079b4f22ba9d11a2e.etc2.stex" ]
+dest_md5="c7a02e1abb04b22074607c50834f3e33"
 
 [params]
 

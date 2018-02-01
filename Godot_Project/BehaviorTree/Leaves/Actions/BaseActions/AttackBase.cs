@@ -8,6 +8,7 @@ namespace BehaviorTree
 		[Export] public float damage = 1.0f;
 		[Export] public string attackGroup = "Player";
 		[Export] public string damageMethod = "OnDamage";
+		[Export] public BehaviorStatus statusIfNoTarget = BehaviorStatus.Success;
 
 
 		public AttackBase()
@@ -58,7 +59,7 @@ namespace BehaviorTree
 			}
 			else
 			{
-				GD.Print("No target");
+				status = statusIfNoTarget;
 			}
 		}
 

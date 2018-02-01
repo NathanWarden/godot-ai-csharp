@@ -6,7 +6,11 @@ path="res://.import/scene_03.dae-4087074ea339ff54badcd6a3ee7df567.scn"
 
 [deps]
 
+source_file="res://Meshes/scene_03.dae"
 source_md5="4ae43ab439e001b032479169b804669d"
+
+dest_files=[ "res://.import/scene_03.dae-4087074ea339ff54badcd6a3ee7df567.scn" ]
+dest_md5="b05ff8ce160dec31185ae610b91bfca8"
 
 [params]
 

@@ -98,6 +98,7 @@
     <Compile Include="BehaviorTree\AttackSystem\Projectiles\IProjectile.cs" />
     <Compile Include="BehaviorTree\AttackSystem\Projectiles\Projectile3D.cs" />
     <Compile Include="BehaviorTree\Leaves\Actions\Fail.cs" />
+    <Compile Include="BehaviorTree\Leaves\Data\HasTarget.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="BehaviorTree\Composites\" />

@@ -27,7 +27,7 @@
 
 			if (nodeState == GetEndStatus())
 			{
-				status = GetEndStatus();
+				status = nodeState;
 				return;
 			}
 
@@ -37,7 +37,7 @@
 
 				if (currentNode >= nodes.Count)
 				{
-					status = GetContinueStatus();
+					status = nodeState;
 					return;
 				}
 
