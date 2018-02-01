@@ -7,7 +7,7 @@
 			if (leafNode != null)
 			{
 				int statusInt = (int)leafNode.ProcessLogic(delta);
-				status = (BehaviorStatus)statusInt;
+				status = (BehaviorStatus)(-statusInt);
 			}
 			else
 			{
