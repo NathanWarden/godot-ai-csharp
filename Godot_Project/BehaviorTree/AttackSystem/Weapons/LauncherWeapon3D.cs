@@ -57,10 +57,10 @@ namespace BehaviorTree
 
 		void InitProjectile(Spatial projectile, AttackData attackData)
 		{
-			AddChild(projectile);
-			projectile.Translation = new Vector3(0,0,0);
-			projectile.LookAt((attackData.target as Spatial).GlobalTransform.origin, new Vector3(0,1,0));
+			Transform globalTfm = GetGlobalTransform();
 			attackData.attacker.behaviorTree.navigator.GetNode().GetParent().AddChild(projectile);
+			projectile.SetGlobalTransform(globalTfm);
+			projectile.LookAt((attackData.target as Spatial).GlobalTransform.origin, new Vector3(0,1,0));
 			(projectile as IProjectile).Reset();
 		}
 
@@ -73,12 +73,23 @@ namespace BehaviorTree
 			{
 				AttackData attackData = iProjectile.GetAttackData();
 
-				projectile.Translation += new Vector3(0,0,-1) * attackData.deltaTime * 5;
+				Vector3 b = -projectile.Transform.basis.GetAxis(2);
+				projectile.Translation += b * attackData.deltaTime * 5;
 
 				rayCast = projectile.GetNodeInChildrenByType<RayCast>();
 
 				if ( rayCast != null && rayCast.IsColliding() )
 				{
+					if (!(attackData.target is IDamageReceiver))
+					{
+						Node collider = rayCast.GetCollider() as Node;
+
+						if (collider is IDamageReceiver)
+						{
+							attackData.target = collider;
+						}
+					}
+
 					base.ProcessAttack(attackData);
 				}
 			}

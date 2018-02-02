@@ -136,6 +136,12 @@ shape = SubResource( 3 )
 disabled = false
 _sections_unfolded = [ "Transform" ]
 
+[node name="AttackPoint" type="Spatial" parent="PseudoPlayer" index="2" groups=[
+"PlayerHitPoint",
+]]
+
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.75884, 0 )
+
 [node name="BehaviorTree" type="Spatial" parent="." index="1"]
 
 script = ExtResource( 2 )
@@ -208,11 +214,15 @@ overrideBaseSpeed = true
 speed = 0.0
 weaponName = "Launcher"
 damage = 50.0
-attackGroup = "Player"
+attackGroup = "PlayerHitPoint"
 damageMethod = "OnDamage"
 statusIfNoTarget = 1
 
 [node name="BaseSetup" parent="." index="2" instance=ExtResource( 12 )]
+
+[node name="MeshInstance" parent="BaseSetup/NavAgent" index="0"]
+
+editor/display_folded = true
 
 [node name="LauncherWeapon" parent="BaseSetup/NavAgent" index="2"]
 
